@@ -1,5 +1,5 @@
 #include "Mazo.h"
-
+#include "Carta.h"
 Mazo::Mazo()
 {
 	mazo = Carta();

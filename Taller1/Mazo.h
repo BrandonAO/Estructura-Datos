@@ -1,4 +1,5 @@
 #pragma once
+#include "Carta.h"
 class Mazo
 {
 private:

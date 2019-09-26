@@ -1,11 +1,14 @@
 #pragma once
+#include "Jugador.h"
+#include "Croupier.h"
+#include "Mazo.h"
 class Blackjack
 {
 	
 	
 private:
-	Jugador jugadores[100];
-	Crupier crupier;
+	Jugador* vectorJugadores[6];
+	Croupier croupier;
 	Mazo mazo;
 public:
 	Blackjack();
