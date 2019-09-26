@@ -2,7 +2,7 @@
 
 Blackjack::Blackjack()
 {
-	listaJugadores = new Jugador();
+	vectorJugadores = new Jugador();
 	mazo = Mazo();
 	croupier = Croupier();
 

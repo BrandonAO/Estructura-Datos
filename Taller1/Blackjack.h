@@ -7,7 +7,7 @@ class Blackjack
 {
 
 private:
-	Jugador* listaJugadores;
+	Jugador* vectorJugadores;
 	Croupier croupier;
 	Mazo mazo;
 public:
