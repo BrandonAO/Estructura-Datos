@@ -26,3 +26,7 @@ Jugador::~Jugador()
 
 }
 
+void Jugador::setNombre(string nombre)
+{
+	nombre = nombre;
+}
