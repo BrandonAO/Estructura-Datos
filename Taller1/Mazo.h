@@ -8,7 +8,7 @@ private:
 	Carta *mazo;
 public:
 	Mazo();
-	Mazo(int);
+	Mazo();
 	void agregarCarta(Carta&);
 	~Mazo();
 
