@@ -2,12 +2,12 @@
 
 Carta::Carta()
 {
-	//falta inicializar pinta
 
-	valor = "";
+	valor = '0';
+	pinta = "";
 }
 
-Carta::Carta(string _valor, char _pinta)
+Carta::Carta(char _valor, string _pinta)
 {
 	valor = _valor;
 	pinta = _pinta;

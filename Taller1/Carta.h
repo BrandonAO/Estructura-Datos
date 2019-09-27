@@ -5,11 +5,13 @@ using namespace std;
 class Carta
 {
 private:
-	string valor;
-	char pinta;
+	char valor;
+	string pinta;
 public:
 	Carta();
-	Carta(string valor, char pinta);
+	Carta(char valor, string pinta);
 
 };
+
+
 

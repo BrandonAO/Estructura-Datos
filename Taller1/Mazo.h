@@ -3,10 +3,12 @@
 class Mazo
 {
 private:
-	Carta mazo;
+	int cantActual;
+	int max;
+	Carta *mazo;
 public:
 	Mazo();
-	Mazo(Carta);
+	Mazo(int);
 	~Mazo();
 
 

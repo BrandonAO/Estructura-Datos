@@ -2,12 +2,16 @@
 #include "Carta.h"
 Mazo::Mazo()
 {
-	mazo = Carta();
+	max = 0;
+	cantActual = 0;
+	mazo = new Carta[104];
 }
 
-Mazo::Mazo(Carta _mazo)
+Mazo::Mazo(int _max)
 {
-	mazo = _mazo;
+	cantActual = 0;
+	max = _max;
+	mazo = new Carta[104];
 }
 
 Mazo::~Mazo()

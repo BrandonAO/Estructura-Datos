@@ -12,7 +12,7 @@ using std::getline;
 
 #include <sstream>
 using std::stringstream;
-
+int contAdmin = 0;
 //lectura admin
 void leerArchivoAdmin() {
 	ifstream is("admin.txt");
@@ -24,6 +24,7 @@ void leerArchivoAdmin() {
 		while (getline(is, linea)) {
 			stringstream ss(linea);
 
+			contAdmin++;
 			// Obtenemos el rut y descartamos el ';'
 			string rut;
 			getline(ss, rut, ',');
@@ -122,4 +123,5 @@ int main()
 	leerArchivoAdmin();
 	leerArchivoCartas();
 	leerArchivoJugadores();
+	std::cout << "Contador = " << contAdmin << endl;
 }
