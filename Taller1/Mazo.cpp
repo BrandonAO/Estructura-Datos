@@ -8,9 +8,6 @@ Mazo::Mazo()
 	this->mazo= new Carta[max];
 }
 
-Mazo::Mazo() {
-	
-}
 Mazo::~Mazo()
 {
 

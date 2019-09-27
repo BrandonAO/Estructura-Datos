@@ -1,5 +1,10 @@
 #include "Croupier.h"
 
 Croupier::Croupier() {
-	mano = Carta();
+
+	this->mano = new Carta[10];
+}
+
+Croupier::~Croupier()
+{
 }

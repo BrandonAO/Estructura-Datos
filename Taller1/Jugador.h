@@ -17,8 +17,7 @@ public:
 	Jugador();
 	Jugador(string,string,int,int, short int);
 	~Jugador();
-	void setNombre(string nombre);
-
+	
 };
 
 

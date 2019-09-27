@@ -7,10 +7,13 @@ class Blackjack
 {
 
 private:
-	Jugador jugadores[100];
+	Jugador *jugadores;
+	int cantActual;
+	int max;
 	Croupier croupier;
 	Mazo mazo;
 public:
-	Blackjack();
+	Blackjack(Croupier, Mazo);
+	~Blackjack();
 };
 

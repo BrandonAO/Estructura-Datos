@@ -3,30 +3,31 @@
 #include <stdio.h>
 #include "Carta.h"
 
-Jugador::Jugador() 
+
+
+Jugador::Jugador()
 {
 	nombre = "";
 	rut = "";
-	partidasGanadas = 0;
+	partidasGanadas=0;
 	idBilletera = 0;
-	mano = new Carta[6];
+	mano = new Carta[10];
 	puntaje = 0;
+
 }
 
-Jugador::Jugador(string _nombre, string _rut, int _monto, int _idBilletera, short int _partidasGanadas)
+Jugador::Jugador(string nombre, string rut, int monto, int idBilletera, short int partidasGanadas)
 {
-	nombre = _nombre;
-	rut = _rut;
-	partidasGanadas = _partidasGanadas;
-	idBilletera = _idBilletera;
-	puntaje = 0;
+	this->nombre = nombre;
+	this->rut = rut;
+	this->partidasGanadas = partidasGanadas;
+	this->idBilletera = idBilletera;
+	this->mano = new Carta[10];
+	this->puntaje = 0;
+
 }
 
 Jugador::~Jugador()
 {
 }
 
-void Jugador::setNombre(string nombre)
-{
-	nombre = nombre;
-}
