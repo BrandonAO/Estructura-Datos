@@ -3,13 +3,13 @@
 
 Mazo::Mazo()
 {
-	max = 0;
-	cantActual = 0;
-	mazo = new Carta[104];
+	this->cantActual = 0;
+	this->max =104;
+	this->mazo= new Carta[max];
 }
 
 Mazo::Mazo() {
-
+	
 }
 Mazo::~Mazo()
 {
