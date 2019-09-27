@@ -13,6 +13,7 @@ using std::getline;
 #include <sstream>
 using std::stringstream;
 using namespace std;
+using namespace std;
 //librearia clases
 #include "Carta.h"
 #include "Mazo.h"
