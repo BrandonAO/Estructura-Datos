@@ -1,3 +1,4 @@
+#include "Sistema.h"
 #include <iostream>
 using std::cin;
 using std::cout;
@@ -12,7 +13,6 @@ using std::getline;
 
 #include <sstream>
 using std::stringstream;
-using namespace std;
 using namespace std;
 //librearia clases
 #include "Carta.h"
@@ -32,7 +32,7 @@ void leerArchivoAdmin() {
 
 		// Mientras se pueda leer una linea del archivo ...
 		int f = 0;
-	
+
 		while (getline(is, linea)) {
 			stringstream ss(linea);
 			contAdmin++;
@@ -84,11 +84,11 @@ void leerArchivoCartas() {
 
 
 
-			cout << endl;
-		}
-
-		is.close();
+		cout << endl;
 	}
+
+	is.close();
+}
 
 
 //leer archivo jugadores
@@ -116,8 +116,22 @@ void leerArchivoJugadores() {
 			getline(ss, idBilletera, ',');
 			cout << "idBilletera: " << idBilletera << endl;
 
+			// Obtenemos el monto y descartamos el ';'
+			//pendiente castear a int
+			string monto;
+			getline(ss, monto, ',');
+			cout << "monto: " << monto << endl;
 
-int main()
-{
-	
+			// Obtenemos el partidasGanadas, es el resto de la linea
+			//pendiente castear a int
+			string partidasGanadas;
+			getline(ss, partidasGanadas);
+			cout << "partidas ganadas: " << partidasGanadas << endl;
+
+			cout << endl;
+		}
+
+		is.close();
+	}
+
 }
