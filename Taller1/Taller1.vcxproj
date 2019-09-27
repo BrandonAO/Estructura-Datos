@@ -164,7 +164,6 @@
     <ClInclude Include="Croupier.h" />
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Mazo.h" />
-    <ClInclude Include="prueba.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,8 +1,8 @@
 #include "Blackjack.h"
+#include "Croupier.h"
 
 Blackjack::Blackjack()
 {
-	listaJugadores = new Jugador();
 	mazo = Mazo();
 	croupier = Croupier();
 

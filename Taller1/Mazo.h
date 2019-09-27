@@ -3,10 +3,12 @@
 class Mazo
 {
 private:
-	Carta mazo;
+	int max;
+	int cantActual;
+	Carta *mazo;
 public:
 	Mazo();
-	Mazo(Carta);
+	void agregarCarta(Carta&);
 	~Mazo();
 
 

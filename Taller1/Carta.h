@@ -6,10 +6,10 @@ class Carta
 {
 private:
 	string valor;
-	char pinta;
+	string pinta;
 public:
 	Carta();
-	Carta(string valor, char pinta);
+	Carta(string valor, string pinta);
 
 };
 

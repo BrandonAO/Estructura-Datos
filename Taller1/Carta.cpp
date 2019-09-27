@@ -4,10 +4,10 @@ Carta::Carta()
 {
 	//falta inicializar pinta
 
-	valor = "";
+	valor = valor;
 }
 
-Carta::Carta(string _valor, char _pinta)
+Carta::Carta(string _valor, string _pinta)
 {
 	valor = _valor;
 	pinta = _pinta;

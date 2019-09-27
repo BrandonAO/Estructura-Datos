@@ -1,15 +1,20 @@
 #include "Mazo.h"
 #include "Carta.h"
+
 Mazo::Mazo()
 {
-	mazo = Carta();
-}
-
-Mazo::Mazo(Carta _mazo)
-{
-	mazo = _mazo;
+	this->cantActual = 0;
+	this->max = 50;
+	this->mazo = new Carta[max];
 }
 
 Mazo::~Mazo()
 {
+
+}
+void Mazo::agregarCarta(Carta& car) {
+	if (cantActual < max) {
+		this->mazo[cantActual] = car;
+		cantActual++;
+	}
 }
