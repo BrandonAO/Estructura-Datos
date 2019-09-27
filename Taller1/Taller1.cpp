@@ -89,7 +89,7 @@ void leerArchivoCartas() {
 		is.close();
 	}
 
-}
+
 //leer archivo jugadores
 void leerArchivoJugadores() {
 	ifstream is("jugadores.txt");

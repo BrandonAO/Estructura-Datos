@@ -8,7 +8,9 @@ Mazo::Mazo()
 	mazo = new Carta[104];
 }
 
-Mazo::Mazo(int _max)
+Mazo::Mazo() {
+
+}
 Mazo::~Mazo()
 {
 
