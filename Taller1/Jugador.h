@@ -8,13 +8,14 @@ class Jugador
 private:
 	string nombre;
 	string rut;
-	Carta mano;
+	Carta *mano;
 	short int partidasGanadas;
 	int idBilletera;
 	int monto;
+	int puntaje;
 public:
 	Jugador();
-	Jugador(string,int,Carta,short int,int);
+	Jugador(string,string,int,int, short int);
 	~Jugador();
 	void setNombre(string nombre);
 

@@ -36,6 +36,7 @@ void leerArchivoAdmin() {
 			stringstream ss(linea);
 			contAdmin++;
 
+			contAdmin++;
 			// Obtenemos el rut y descartamos el ';'
 			string rut;
 			getline(ss, rut, ',');

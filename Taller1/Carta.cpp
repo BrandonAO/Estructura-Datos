@@ -2,7 +2,6 @@
 
 Carta::Carta()
 {
-	//falta inicializar pinta
 
 	valor = valor;
 }

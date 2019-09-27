@@ -3,6 +3,7 @@
 
 Blackjack::Blackjack()
 {
+
 	mazo = Mazo();
 	croupier = Croupier();
 
