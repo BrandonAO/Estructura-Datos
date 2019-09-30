@@ -19,6 +19,7 @@ using namespace std;
 #include "Mazo.h"
 #include "Blackjack.h"
 #include "Jugador.h"
+#include "Admin.h"
 
 bool billeteras[100]; //normal o con puntero para hacerlo dinamico, revisar.
 Sistema::Sistema()
@@ -38,13 +39,24 @@ Sistema::Sistema()
 void Sistema::iniciarSistema() {
 
 	//lecturas
-	//leerArchivoAdmin();
+
 	leerArchivoCartas();
 	cout << "------------- Se han agregado las cartas. -------------" << endl;
 	blackjack->getMazo().imprimirCartas();
 	cout << "------------- Se mezclaran las cartas. -------------" << endl;
 	blackjack->getMazo().mezclarMazo();
 	blackjack->getMazo().imprimirCartas();
+	leerArchivoAdmin();
+	cout << "Se han agregado los administradores: " << endl;
+	blackjack->imprimirAdmin();
+	//consulta de saldo.
+	consultarSaldo();
+
+	
+
+	
+
+
 	leerArchivoJugadores();
 	for (int i = 0; i < cantJugadores; i++) {
 		cout << "Nombre: " << jugadores[i].getNombre() << "   Id: " << jugadores[i].getIdBilletera() << endl;
@@ -56,9 +68,8 @@ void Sistema::iniciarSistema() {
 
 }
 
-// vector admin
-string admin[100][2];
-int contAdmin = 0;
+
+
 //lectura admin
 void Sistema::leerArchivoAdmin() {
 	ifstream is("admin.txt");
@@ -71,21 +82,19 @@ void Sistema::leerArchivoAdmin() {
 
 		while (getline(is, linea)) {
 			stringstream ss(linea);
-			contAdmin++;
-
-			contAdmin++;
+	
 			// Obtenemos el rut y descartamos el ';'
 			string rut;
 			getline(ss, rut, ',');
 			cout << "rut: " << rut << endl;
-			admin[f][0] = rut;
+	
 
 			// Obtenemos el id, este es el resto de la linea
 			string id;
 			getline(ss, id);
 			cout << "id: " << id << endl;
-			admin[f][1] = id;
-			f++;
+			Admin  *admin = new Admin(rut, id);
+			blackjack->agregarAdmin(*admin);
 			cout << endl;
 		}
 
@@ -209,5 +218,31 @@ int Sistema::asignarBilletera() {
 		}
 	}
 	return 0;
+	
 }
+// consultar saldo de jugadores
+
+void Sistema::consultarSaldo() {
+	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
+	cout << "Iniciar cuenta administrador:" << endl;
+	cout << "Ingresar rut admin:" << endl;
+	string rutAdmin;
+	cin >> rutAdmin;
+	cout << "Ingresar id admin;" << endl;
+	string idAdmin;
+	cin >> idAdmin;
+	if (blackjack->buscarAdmin(rutAdmin, idAdmin)==true) {
+		cout << "Sesion iniciada:" << endl;
+		//lo busca por idBilltera, e imprime sus datos. y saldos
+		cout << "Ingresar idBilletera a buscar:" << endl;
+		int idBilletera;
+		cin >> idBilletera;
+		blackjack->buscarJugador(idBilletera);
+		
+	}else {
+		cout << "Intente otra vez:" << endl;
+	}
+
+}
+
 
