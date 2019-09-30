@@ -27,11 +27,14 @@ Sistema::Sistema()
 	max = 100;
 	this->blackjack = new Blackjack();
 	this->jugadores = new Jugador[max];
+	this->administradores = new Admin[max];
 	cantJugadores = 0;
+	this->cantActualAdmin = 0;
+	this->maxAdmin = 20;
 	for (int i = 0; i < 100; i++) {
 		billeteras[i] = false;
 	}
-
+		
 }
 
 
@@ -58,7 +61,7 @@ void Sistema::iniciarSistema() {
 	*/
 	leerArchivoAdmin();
 	cout << "Se han agregado los administradores: " << endl;
-	blackjack->imprimirAdmin();
+	imprimirAdmin();
 	//consulta de saldo.
 	consultarSaldo();
 
@@ -92,7 +95,7 @@ void Sistema::leerArchivoAdmin() {
 			getline(ss, id);
 			cout << "id: " << id << endl;
 			Admin* admin = new Admin(rut, id);
-			blackjack->agregarAdmin(*admin);
+			agregarAdmin(*admin);
 			cout << endl;
 		}
 
@@ -229,13 +232,13 @@ void Sistema::consultarSaldo() {
 	cout << "Ingresar clave admin;" << endl;
 	string claveAdmin;
 	cin >> claveAdmin;
-	if (blackjack->buscarAdmin(rutAdmin, claveAdmin) == true) {
+	if (buscarAdmin(rutAdmin, claveAdmin) == true) {
 		cout << "Sesion iniciada:" << endl;
 		//lo busca por idBilltera, e imprime sus datos. y saldos
 		cout << "Ingresar idBilletera a buscar:" << endl;
 		int idBilletera;
 		cin >> idBilletera;
-		blackjack->buscarJugador(idBilletera);
+		buscarJugador(idBilletera);
 
 	}
 	else {
@@ -244,4 +247,45 @@ void Sistema::consultarSaldo() {
 
 }
 
+void Sistema::agregarAdmin(Admin& admin) {
+	if (cantActualAdmin < maxAdmin) {
+		this->administradores[cantActualAdmin] = admin;
+		cantActualAdmin++;
+
+	}
+}
+void Sistema::imprimirAdmin()
+{
+	for (int i = 0; i < cantActualAdmin; i++) {
+		cout << "Rut: " << administradores[i].getRut() << "   Id: " << administradores[i].getId() << endl;
+	}
+}
+
+bool Sistema::buscarAdmin(string rut, string id)
+{
+	for (int i = 0; i < cantActualAdmin; i++) {
+		if (administradores[i].getRut().compare(rut) == 0 && administradores[i].getId().compare(id) == 0) {
+			cout << "Encontrado" << endl;
+			return true;
+
+		}
+	}
+	cout << "No encontrado" << endl;
+	return false;
+}
+
+bool Sistema::buscarJugador(int idBilletera)
+{
+
+	for (int i = 0; i < cantJugadores; i++) {
+		if (jugadores[i].getIdBilletera() == idBilletera) {
+			cout << "Encontrado" << endl;
+			cout << "Nombre: " << jugadores[i].getNombre() << " idBilletera: " << jugadores[i].getIdBilletera() << " Saldo disponible:" << jugadores[i].getMonto() << endl;
+			return true;
+		}
+	}
+	cout << "No encontrado" << endl;
+	return false;
+
+}
 

@@ -13,6 +13,7 @@ Jugador::Jugador()
 	idBilletera = 0;
 	mano = new Carta[10];
 	puntaje = 0;
+	monto = 0;
 
 }
 
@@ -24,6 +25,7 @@ Jugador::Jugador(string nombre, string rut, int monto, int idBilletera, short in
 	this->idBilletera = idBilletera;
 	this->mano = new Carta[10];
 	this->puntaje = 0;
+	this->monto = monto;
 
 }
 
