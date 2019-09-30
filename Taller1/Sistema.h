@@ -21,7 +21,13 @@ public:
 
 	void pausa();
 
+	void menuPrincipalIniciarPartida();
+
+	void menuPrincipalConfiguracion();
+
 	void consultarSaldo();
+
+	void CargarSaldo();
 
 	
 

@@ -193,7 +193,39 @@ void Sistema::consultarSaldo() {
 		cout << "Intente otra vez:" << endl;
 	}
 }
-	
+// Cargar saldo a a la billetera
+void Sistema::CargarSaldo() {
+	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
+	cout << "Iniciar cuenta administrador:" << endl;
+	cout << "Ingresar rut admin:" << endl;
+	string rutAdmin;
+	cin >> rutAdmin;
+	cout << "Ingresar id admin;" << endl;
+	string idAdmin;
+	cin >> idAdmin;
+	if (blackjack->buscarAdmin(rutAdmin, idAdmin) == true) {
+		cout << "Sesion iniciada:" << endl;
+		//lo busca por idBilltera, luego pregunta cuanto saldo hay que cargar
+		cout << "Ingresar idBilletera a buscar:" << endl;
+		int idBilletera;
+		cin >> idBilletera;
+		cout << "Ingresar saldo a cargar [$1000 - 100000]:" << endl;
+		int saldo;
+		cin >> saldo;
+		if (saldo >=  1000 && saldo < 100000) {
+			//se carga el saldo ingresado por pantalla.
+
+
+		}
+		
+
+
+	}
+	else {
+		cout << "Intente otra vez:" << endl;
+	}
+}
+
 
 	// menu principal
 	void Sistema::menuPrincipal() {
@@ -221,6 +253,7 @@ void Sistema::consultarSaldo() {
 			case '1':
 				system("cls");
 				cout << "Has elejido opcion 1.\n";
+				menuPrincipalIniciarPartida();
 				pausa();
 				break;
 
@@ -233,6 +266,7 @@ void Sistema::consultarSaldo() {
 			case '3':
 				system("cls");
 				cout << "Has elejido opcion 3.\n";
+				menuPrincipalConfiguracion();
 				pausa();
 				break;
 
@@ -268,7 +302,7 @@ void Sistema::pausa()
 	getwchar();
 }
 // menu 2 iniciar partida
-void Sistema::menuPrincipal() {
+void Sistema::menuPrincipalIniciarPartida() {
 
 	bool bandera = false;
 	char tecla;
@@ -332,7 +366,7 @@ void Sistema::menuPrincipal() {
 }
 
 // menu 3 configuracion
-void Sistema::menuPrincipal() {
+void Sistema::menuPrincipalConfiguracion() {
 
 	bool bandera = false;
 	char tecla;
