@@ -124,33 +124,38 @@ void Sistema::leerArchivoJugadores() {
 		while (getline(is, linea)) {
 			stringstream ss(linea);
 
-			// Obtenemos el rut y descartamos el ';'
+			// Obtenemos el rut y descartamos el ','
 			string rut;
 			getline(ss, rut, ',');
 			cout << "rut: " << rut << endl;
 
-			// Obtenemos el nombre y descartamos el ';'
+			// Obtenemos el nombre y descartamos el ','
 			string nombre;
 			getline(ss, nombre, ',');
 			cout << "nombre: " << nombre << endl;
-			// Obtenemos el idBilletera y descartamos el ';'
-			int numText;
+			// Obtenemos el idBilletera y descartamos el ','
+			string numText;
 			getline(ss, numText, ',');
-			cout << "idBilletera: " << idBilletera << endl;
+			int idBilletera = stoi(numText);
+			cout << "idBilletera: " << numText << endl;
 
-			// Obtenemos el monto y descartamos el ';'
+			// Obtenemos el monto y descartamos el ','
 			//pendiente castear a int
-			string monto;
-			getline(ss, monto, ',');
+
+			getline(ss, numText, ',');
+			int monto = stoi(numText);
 			cout << "monto: " << monto << endl;
 
 			// Obtenemos el partidasGanadas, es el resto de la linea
-			//pendiente castear a int
-			string partidasGanadas;
-			getline(ss, partidasGanadas);
+			//pendiente castear a int [listo]
+			
+			getline(ss, numText);
+			short int partidasGanadas = stoi(numText);
 			cout << "partidas ganadas: " << partidasGanadas << endl;
 
-			cout << endl;
+			Jugador* jugador = new Jugador(nombre, rut, monto, idBilletera, partidasGanadas);
+			blackjack->agregarJugador(*jugador);
+
 		}
 
 		is.close();

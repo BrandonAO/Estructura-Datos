@@ -18,7 +18,7 @@ void Mazo::agregarCarta(Carta &car) {
 	if (cantActual < max) {
 		this->mazo[cantActual] = car;
 		cantActual++;
-		cout << cantActual << endl;
+
 	}
 }
 
