@@ -5,7 +5,7 @@ class Mazo
 private:
 	int cantActual;
 	int max;
-	Carta *mazo;
+	Carta* mazo;
 public:
 	Mazo();
 	void agregarCarta(Carta&);

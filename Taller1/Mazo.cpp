@@ -14,7 +14,7 @@ Mazo::~Mazo()
 {
 
 }
-void Mazo::agregarCarta(Carta &car) {
+void Mazo::agregarCarta(Carta& car) {
 	if (cantActual < max) {
 		this->mazo[cantActual] = car;
 		cantActual++;

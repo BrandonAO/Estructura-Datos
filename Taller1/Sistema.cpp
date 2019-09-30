@@ -46,25 +46,23 @@ void Sistema::iniciarSistema() {
 	cout << "------------- Se mezclaran las cartas. -------------" << endl;
 	blackjack->getMazo().mezclarMazo();
 	blackjack->getMazo().imprimirCartas();
+
+	leerArchivoJugadores();
+	/*
+	for (int i = 0; i < cantJugadores; i++) {
+		cout << "Nombre: " << jugadores[i].getNombre() << "   Id: " << jugadores[i].getIdBilletera() << endl;
+	}
+	for (int i = 0; i < 100; i++) {
+		cout << "id: " << i + 1 << "   estado: " << billeteras[i] << endl;
+	}
+	*/
 	leerArchivoAdmin();
 	cout << "Se han agregado los administradores: " << endl;
 	blackjack->imprimirAdmin();
 	//consulta de saldo.
 	consultarSaldo();
 
-	
 
-	
-
-
-	leerArchivoJugadores();
-	for (int i = 0; i < cantJugadores; i++) {
-		cout << "Nombre: " << jugadores[i].getNombre() << "   Id: " << jugadores[i].getIdBilletera() << endl;
-	}
-	for (int i = 0; i < 100; i++) {
-		cout << "id: " << i+1 << "   estado: " << billeteras[i] << endl;
-	}
-	
 
 }
 
@@ -82,18 +80,18 @@ void Sistema::leerArchivoAdmin() {
 
 		while (getline(is, linea)) {
 			stringstream ss(linea);
-	
+
 			// Obtenemos el rut y descartamos el ';'
 			string rut;
 			getline(ss, rut, ',');
 			cout << "rut: " << rut << endl;
-	
+
 
 			// Obtenemos el id, este es el resto de la linea
 			string id;
 			getline(ss, id);
 			cout << "id: " << id << endl;
-			Admin  *admin = new Admin(rut, id);
+			Admin* admin = new Admin(rut, id);
 			blackjack->agregarAdmin(*admin);
 			cout << endl;
 		}
@@ -121,9 +119,9 @@ void Sistema::leerArchivoCartas() {
 			// Obtenemos el pinta, este es el resto de la linea
 			string pinta;
 			getline(ss, pinta);
-			
+
 			// Agregar carta al mazo
-			Carta *carta = new Carta(valor, pinta);
+			Carta* carta = new Carta(valor, pinta);
 			blackjack->getMazo().agregarCarta(*carta);
 
 
@@ -171,14 +169,14 @@ void Sistema::leerArchivoJugadores() {
 			cout << "monto: " << monto << endl;
 
 			// Obtenemos el partidasGanadas, es el resto de la linea
-			
+
 			getline(ss, numText);
 			short int partidasGanadas = stoi(numText);
 			cout << "partidas ganadas: " << partidasGanadas << endl;
 
 			Jugador* jugador = new Jugador(nombre, rut, monto, idBilletera, partidasGanadas);
 			this->agregarJugador(*jugador);
-			billeteras[idBilletera-1] = true;
+			billeteras[idBilletera - 1] = true;
 
 		}
 
@@ -214,11 +212,11 @@ int Sistema::asignarBilletera() {
 	for (int i = 0; i < 100; i++) {
 		if (billeteras[i] == false) {
 			billeteras[i] = true;
-			return i+1;
+			return i + 1;
 		}
 	}
 	return 0;
-	
+
 }
 // consultar saldo de jugadores
 
@@ -228,18 +226,19 @@ void Sistema::consultarSaldo() {
 	cout << "Ingresar rut admin:" << endl;
 	string rutAdmin;
 	cin >> rutAdmin;
-	cout << "Ingresar id admin;" << endl;
-	string idAdmin;
-	cin >> idAdmin;
-	if (blackjack->buscarAdmin(rutAdmin, idAdmin)==true) {
+	cout << "Ingresar clave admin;" << endl;
+	string claveAdmin;
+	cin >> claveAdmin;
+	if (blackjack->buscarAdmin(rutAdmin, claveAdmin) == true) {
 		cout << "Sesion iniciada:" << endl;
 		//lo busca por idBilltera, e imprime sus datos. y saldos
 		cout << "Ingresar idBilletera a buscar:" << endl;
 		int idBilletera;
 		cin >> idBilletera;
 		blackjack->buscarJugador(idBilletera);
-		
-	}else {
+
+	}
+	else {
 		cout << "Intente otra vez:" << endl;
 	}
 

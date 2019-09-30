@@ -9,7 +9,7 @@ Jugador::Jugador()
 {
 	nombre = "";
 	rut = "";
-	partidasGanadas=0;
+	partidasGanadas = 0;
 	idBilletera = 0;
 	mano = new Carta[10];
 	puntaje = 0;

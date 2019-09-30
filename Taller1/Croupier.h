@@ -4,7 +4,7 @@ using namespace std;
 class Croupier
 {
 private:
-	Carta *mano;
+	Carta* mano;
 public:
 	Croupier();
 	~Croupier();

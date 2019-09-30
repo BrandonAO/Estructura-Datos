@@ -14,21 +14,17 @@ private:
 public:
 	Sistema();
 	void iniciarSistema();
-
-	
 	void leerArchivoAdmin();
 	void leerArchivoCartas();
-
 	void leerArchivoJugadores();
-
 	void consultarSaldo();
 
-	
-
-	
 
 
-	
+
+
+
+
 
 	void agregarJugador(Jugador&);
 	void registrarJugador();
