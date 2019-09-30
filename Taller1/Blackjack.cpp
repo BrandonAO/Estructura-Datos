@@ -21,10 +21,15 @@ Mazo& Blackjack::getMazo()
 	return mazo;
 }
 
-void Blackjack::agregarJugador(Jugador& jug) {
-	if (cantActual < max) {
-		this->jugadores[cantActual] = jug;
-		cantActual++;
-		
+bool Blackjack::agregarJugador(Jugador& jug) {
+	if (cantActual >= max) {
+		return false;
 	}
+
+	if (jug.getMonto() < 5000) {
+		return false;
+	}
+	this->jugadores[cantActual] = jug;
+	cantActual++;
+	return true;
 }

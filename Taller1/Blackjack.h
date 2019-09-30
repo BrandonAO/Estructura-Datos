@@ -16,6 +16,6 @@ public:
 	Blackjack();
 	~Blackjack();
 	Mazo& getMazo();
-	void agregarJugador(Jugador&);
+	bool agregarJugador(Jugador&);
 };
 

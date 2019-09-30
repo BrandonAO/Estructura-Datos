@@ -27,7 +27,50 @@ Jugador::Jugador(string nombre, string rut, int monto, int idBilletera, short in
 
 }
 
+Jugador::Jugador(string nombre, string rut, int idBilletera)
+{
+	this->nombre = nombre;
+	this->rut = rut;
+	this->idBilletera = idBilletera;
+	this->mano = new Carta[10];
+}
+
 Jugador::~Jugador()
 {
+}
+
+string Jugador::getNombre()
+{
+	return nombre;
+}
+
+string Jugador::getRut()
+{
+	return rut;
+}
+
+Carta& Jugador::getMano()
+{
+	return *mano;
+}
+
+int Jugador::getIdBilletera()
+{
+	return idBilletera;
+}
+
+int Jugador::getPartidasGanadas()
+{
+	return partidasGanadas;
+}
+
+int Jugador::getMonto()
+{
+	return monto;
+}
+
+int Jugador::getPuntaje()
+{
+	return puntaje;
 }
 

@@ -20,10 +20,19 @@ using namespace std;
 #include "Blackjack.h"
 #include "Jugador.h"
 
+bool billeteras[100]; //normal o con puntero para hacerlo dinamico, revisar.
 Sistema::Sistema()
 {
-	blackjack = new Blackjack();
+	max = 100;
+	this->blackjack = new Blackjack();
+	this->jugadores = new Jugador[max];
+	cantJugadores = 0;
+	for (int i = 0; i < 100; i++) {
+		billeteras[i] = false;
+	}
+
 }
+
 
 //run sistem
 void Sistema::iniciarSistema() {
@@ -31,12 +40,18 @@ void Sistema::iniciarSistema() {
 	//lecturas
 	//leerArchivoAdmin();
 	leerArchivoCartas();
-	cout << "Se han agregado las cartas. " << endl;
+	cout << "------------- Se han agregado las cartas. -------------" << endl;
 	blackjack->getMazo().imprimirCartas();
-	cout << "Se mezclaran las cartas. " << endl;
+	cout << "------------- Se mezclaran las cartas. -------------" << endl;
 	blackjack->getMazo().mezclarMazo();
 	blackjack->getMazo().imprimirCartas();
-	//leerArchivoJugadores();
+	leerArchivoJugadores();
+	for (int i = 0; i < cantJugadores; i++) {
+		cout << "Nombre: " << jugadores[i].getNombre() << "   Id: " << jugadores[i].getIdBilletera() << endl;
+	}
+	for (int i = 0; i < 100; i++) {
+		cout << "id: " << i+1 << "   estado: " << billeteras[i] << endl;
+	}
 	
 
 }
@@ -147,19 +162,52 @@ void Sistema::leerArchivoJugadores() {
 			cout << "monto: " << monto << endl;
 
 			// Obtenemos el partidasGanadas, es el resto de la linea
-			//pendiente castear a int [listo]
 			
 			getline(ss, numText);
 			short int partidasGanadas = stoi(numText);
 			cout << "partidas ganadas: " << partidasGanadas << endl;
 
 			Jugador* jugador = new Jugador(nombre, rut, monto, idBilletera, partidasGanadas);
-			blackjack->agregarJugador(*jugador);
+			this->agregarJugador(*jugador);
+			billeteras[idBilletera-1] = true;
 
 		}
 
 		is.close();
 	}
 
+}
+
+void Sistema::agregarJugador(Jugador& jug) {
+	if (cantJugadores < max) {
+		jugadores[cantJugadores] = jug;
+		cantJugadores++;
+	}
+}
+
+void Sistema::registrarJugador() {
+
+	string nombre;
+	cout << "Ingrese nombre: " << endl;
+	cin >> nombre;
+
+	cout << "Ingrese rut: " << endl;
+	string rut;
+	cin >> rut;
+
+	int idBilletera = asignarBilletera();
+	Jugador* jug = new Jugador(nombre, rut, idBilletera);
+	agregarJugador(*jug);
+
+}
+
+int Sistema::asignarBilletera() {
+	for (int i = 0; i < 100; i++) {
+		if (billeteras[i] == false) {
+			billeteras[i] = true;
+			return i+1;
+		}
+	}
+	return 0;
 }
 
