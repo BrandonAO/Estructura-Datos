@@ -7,6 +7,6 @@
 int main()
 {
 	Sistema* sistema = new Sistema();
-	
+
 	sistema->iniciarSistema();
 };

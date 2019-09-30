@@ -22,10 +22,22 @@ using namespace std;
 #include "Admin.h"
 #include <cstdlib>
 
+bool billeteras[100]; //normal o con puntero para hacerlo dinamico, revisar.
 Sistema::Sistema()
 {
-	blackjack = new Blackjack();
+	max = 100;
+	this->blackjack = new Blackjack();
+	this->jugadores = new Jugador[max];
+	this->administradores = new Admin[max];
+	cantJugadores = 0;
+	this->cantActualAdmin = 0;
+	this->maxAdmin = 20;
+	for (int i = 0; i < 100; i++) {
+		billeteras[i] = false;
+	}
+		
 }
+
 
 //run sistem
 void Sistema::iniciarSistema() {
@@ -33,20 +45,27 @@ void Sistema::iniciarSistema() {
 	//lecturas
 
 	leerArchivoCartas();
-	cout << "Se han agregado las cartas. " << endl;
+	cout << "------------- Se han agregado las cartas. -------------" << endl;
 	blackjack->getMazo().imprimirCartas();
-	cout << "Se mezclaran las cartas. " << endl;
+	cout << "------------- Se mezclaran las cartas. -------------" << endl;
 	blackjack->getMazo().mezclarMazo();
 	blackjack->getMazo().imprimirCartas();
+
+	leerArchivoJugadores();
+	/*
+	for (int i = 0; i < cantJugadores; i++) {
+		cout << "Nombre: " << jugadores[i].getNombre() << "   Id: " << jugadores[i].getIdBilletera() << endl;
+	}
+	for (int i = 0; i < 100; i++) {
+		cout << "id: " << i + 1 << "   estado: " << billeteras[i] << endl;
+	}
+	*/
 	leerArchivoAdmin();
 	cout << "Se han agregado los administradores: " << endl;
-	blackjack->imprimirAdmin();
+	imprimirAdmin();
 	//consulta de saldo.
 	consultarSaldo();
 
-	
-
-	
 
 
 }
@@ -65,19 +84,19 @@ void Sistema::leerArchivoAdmin() {
 
 		while (getline(is, linea)) {
 			stringstream ss(linea);
-	
+
 			// Obtenemos el rut y descartamos el ';'
 			string rut;
 			getline(ss, rut, ',');
 			cout << "rut: " << rut << endl;
-	
+
 
 			// Obtenemos el id, este es el resto de la linea
 			string id;
 			getline(ss, id);
 			cout << "id: " << id << endl;
-			Admin  *admin = new Admin(rut, id);
-			blackjack->agregarAdmin(*admin);
+			Admin* admin = new Admin(rut, id);
+			agregarAdmin(*admin);
 			cout << endl;
 		}
 
@@ -104,9 +123,9 @@ void Sistema::leerArchivoCartas() {
 			// Obtenemos el pinta, este es el resto de la linea
 			string pinta;
 			getline(ss, pinta);
-			
+
 			// Agregar carta al mazo
-			Carta *carta = new Carta(valor, pinta);
+			Carta* carta = new Carta(valor, pinta);
 			blackjack->getMazo().agregarCarta(*carta);
 
 
@@ -154,21 +173,54 @@ void Sistema::leerArchivoJugadores() {
 			cout << "monto: " << monto << endl;
 
 			// Obtenemos el partidasGanadas, es el resto de la linea
-			//pendiente castear a int [listo]
-			
+
 			getline(ss, numText);
 			short int partidasGanadas = stoi(numText);
 			cout << "partidas ganadas: " << partidasGanadas << endl;
 
 			Jugador* jugador = new Jugador(nombre, rut, monto, idBilletera, partidasGanadas);
-			blackjack->agregarJugador(*jugador);
+			this->agregarJugador(*jugador);
+			billeteras[idBilletera - 1] = true;
 
 		}
 
 		is.close();
 	}
 
-	
+}
+
+void Sistema::agregarJugador(Jugador& jug) {
+	if (cantJugadores < max) {
+		jugadores[cantJugadores] = jug;
+		cantJugadores++;
+	}
+}
+
+void Sistema::registrarJugador() {
+
+	string nombre;
+	cout << "Ingrese nombre: " << endl;
+	cin >> nombre;
+
+	cout << "Ingrese rut: " << endl;
+	string rut;
+	cin >> rut;
+
+	int idBilletera = asignarBilletera();
+	Jugador* jug = new Jugador(nombre, rut, idBilletera);
+	agregarJugador(*jug);
+
+}
+
+int Sistema::asignarBilletera() {
+	for (int i = 0; i < 100; i++) {
+		if (billeteras[i] == false) {
+			billeteras[i] = true;
+			return i + 1;
+		}
+	}
+	return 0;
+
 }
 // consultar saldo de jugadores
 void Sistema::consultarSaldo() {
@@ -177,10 +229,10 @@ void Sistema::consultarSaldo() {
 	cout << "Ingresar rut admin:" << endl;
 	string rutAdmin;
 	cin >> rutAdmin;
-	cout << "Ingresar id admin;" << endl;
-	string idAdmin;
-	cin >> idAdmin;
-	if (blackjack->buscarAdmin(rutAdmin, idAdmin) == true) {
+	cout << "Ingresar clave admin;" << endl;
+	string claveAdmin;
+	cin >> claveAdmin;
+	if (buscarAdmin(rutAdmin, claveAdmin) == true) {
 		cout << "Sesion iniciada:" << endl;
 		//lo busca por idBilltera, e imprime sus datos. y saldos
 		cout << "Ingresar idBilletera a buscar:" << endl;
@@ -430,4 +482,45 @@ void Sistema::menuPrincipalConfiguracion() {
 
 	
 
+void Sistema::agregarAdmin(Admin& admin) {
+	if (cantActualAdmin < maxAdmin) {
+		this->administradores[cantActualAdmin] = admin;
+		cantActualAdmin++;
+
+	}
+}
+void Sistema::imprimirAdmin()
+{
+	for (int i = 0; i < cantActualAdmin; i++) {
+		cout << "Rut: " << administradores[i].getRut() << "   Id: " << administradores[i].getId() << endl;
+	}
+}
+
+bool Sistema::buscarAdmin(string rut, string id)
+{
+	for (int i = 0; i < cantActualAdmin; i++) {
+		if (administradores[i].getRut().compare(rut) == 0 && administradores[i].getId().compare(id) == 0) {
+			cout << "Encontrado" << endl;
+			return true;
+
+		}
+	}
+	cout << "No encontrado" << endl;
+	return false;
+}
+
+bool Sistema::buscarJugador(int idBilletera)
+{
+
+	for (int i = 0; i < cantJugadores; i++) {
+		if (jugadores[i].getIdBilletera() == idBilletera) {
+			cout << "Encontrado" << endl;
+			cout << "Nombre: " << jugadores[i].getNombre() << " idBilletera: " << jugadores[i].getIdBilletera() << " Saldo disponible:" << jugadores[i].getMonto() << endl;
+			return true;
+		}
+	}
+	cout << "No encontrado" << endl;
+	return false;
+
+}
 

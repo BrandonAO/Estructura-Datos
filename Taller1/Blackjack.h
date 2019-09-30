@@ -8,22 +8,16 @@ class Blackjack
 {
 
 private:
-	Jugador *jugadores;
-	Admin* administradores;
+	Jugador* jugadores;
 	int cantActual;
-	int cantActualAdmin;
 	int max;
-	int maxAdmin;
 	Croupier croupier;
 	Mazo mazo;
 public:
 	Blackjack();
 	~Blackjack();
 	Mazo& getMazo();
-	void agregarJugador(Jugador&);
-	void agregarAdmin(Admin& );
-	void imprimirAdmin();
-	bool buscarAdmin(string rut, string id);
-	bool buscarJugador(int idBilletera);
+	bool agregarJugador(Jugador&);
+
 };
 
