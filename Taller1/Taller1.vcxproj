@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Admin.cpp" />
     <ClCompile Include="Blackjack.cpp" />
     <ClCompile Include="Carta.cpp" />
     <ClCompile Include="Croupier.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Taller1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Admin.h" />
     <ClInclude Include="Blackjack.h" />
     <ClInclude Include="Carta.h" />
     <ClInclude Include="Croupier.h" />

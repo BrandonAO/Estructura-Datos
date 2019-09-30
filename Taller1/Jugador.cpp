@@ -31,3 +31,18 @@ Jugador::~Jugador()
 {
 }
 
+string Jugador::getNombre()
+{
+	return nombre;
+}
+
+int Jugador::getIdBilletra()
+{
+	return idBilletera;
+}
+
+int Jugador::getMonto()
+{
+	return monto;
+}
+

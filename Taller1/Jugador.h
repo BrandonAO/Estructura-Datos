@@ -17,6 +17,9 @@ public:
 	Jugador();
 	Jugador(string,string,int,int, short int);
 	~Jugador();
+	string getNombre();
+	int getIdBilletra();
+	int getMonto();
 	
 };
 
