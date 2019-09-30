@@ -10,7 +10,8 @@ private:
 public:
 	Carta();
 	Carta(string valor, string pinta);
-
+	string getPinta();
+	string getValor();
 };
 
 

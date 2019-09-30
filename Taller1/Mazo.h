@@ -9,6 +9,9 @@ private:
 public:
 	Mazo();
 	void agregarCarta(Carta&);
+	Carta sacarCarta();
+	void mezclarMazo();
+	void imprimirCartas();
 	~Mazo();
 
 

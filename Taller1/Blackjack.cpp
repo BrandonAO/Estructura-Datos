@@ -1,7 +1,7 @@
 #include "Blackjack.h"
 #include "Croupier.h"
 
-Blackjack::Blackjack(Croupier croupier, Mazo mazo)
+Blackjack::Blackjack()
 {
 	this->croupier = Croupier();
 	this->mazo = Mazo();
@@ -12,6 +12,11 @@ Blackjack::Blackjack(Croupier croupier, Mazo mazo)
 
 }
 
-Blackjack::~Blackjack()
+Blackjack::~Blackjack() {
+
+}
+
+Mazo& Blackjack::getMazo()
 {
+	return mazo;
 }

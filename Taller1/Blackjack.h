@@ -13,7 +13,8 @@ private:
 	Croupier croupier;
 	Mazo mazo;
 public:
-	Blackjack(Croupier, Mazo);
+	Blackjack();
 	~Blackjack();
+	Mazo& getMazo();
 };
 

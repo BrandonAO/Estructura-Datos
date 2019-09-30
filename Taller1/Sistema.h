@@ -1,13 +1,17 @@
 #pragma once
+#include "Mazo.h"
+#include "Blackjack.h"
+
 class Sistema
 {
 private:
-
+	Blackjack* blackjack;
 
 public:
-	void inicarSistema();
+	Sistema();
+	void iniciarSistema();
 	void leerArchivoAdmin();
 	void leerArchivoCartas();
-	void leerArchivoJugadroes();
+	void leerArchivoJugadores();
 };
 

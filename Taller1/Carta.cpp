@@ -2,12 +2,20 @@
 
 Carta::Carta()
 {
-
-	valor = valor;
+	pinta = "";
+	valor = "";
 }
 
 Carta::Carta(string _valor, string _pinta)
 {
 	valor = _valor;
 	pinta = _pinta;
+}
+
+string Carta::getPinta() {
+	return pinta;
+}
+
+string Carta::getValor() {
+	return valor;
 }

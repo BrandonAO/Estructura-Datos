@@ -14,17 +14,38 @@ using std::getline;
 #include <sstream>
 using std::stringstream;
 using namespace std;
-//librearia clases
+//libreria clases
 #include "Carta.h"
 #include "Mazo.h"
 #include "Blackjack.h"
 #include "Jugador.h"
 
+Sistema::Sistema()
+{
+	blackjack = new Blackjack();
+}
+
+//run sistem
+void Sistema::iniciarSistema() {
+
+	//lecturas
+	//leerArchivoAdmin();
+	leerArchivoCartas();
+	cout << "Se han agregado las cartas. " << endl;
+	blackjack->getMazo().imprimirCartas();
+	cout << "Se mezclaran las cartas. " << endl;
+	blackjack->getMazo().mezclarMazo();
+	blackjack->getMazo().imprimirCartas();
+	//leerArchivoJugadores();
+	
+
+}
+
 // vector admin
 string admin[100][2];
 int contAdmin = 0;
 //lectura admin
-void leerArchivoAdmin() {
+void Sistema::leerArchivoAdmin() {
 	ifstream is("admin.txt");
 
 	if (is) {
@@ -58,7 +79,7 @@ void leerArchivoAdmin() {
 
 }
 //lectura cartas
-void leerArchivoCartas() {
+void Sistema::leerArchivoCartas() {
 	ifstream is("cartas.txt");
 
 	if (is) {
@@ -71,15 +92,17 @@ void leerArchivoCartas() {
 			// Obtenemos el valor y descartamos el ';'
 			string valor;
 			getline(ss, valor, ',');
-			cout << "valor: " << valor << endl;
+
 
 			// Obtenemos el pinta, este es el resto de la linea
 			string pinta;
 			getline(ss, pinta);
-			cout << "pinta: " << pinta << endl;
-			Carta carta(valor, pinta);
-			Mazo* mazo = new Mazo();
-			mazo->agregarCarta(carta);
+			
+			// Agregar carta al mazo
+			Carta *carta = new Carta(valor, pinta);
+			blackjack->getMazo().agregarCarta(*carta);
+
+
 		}
 
 
@@ -90,9 +113,8 @@ void leerArchivoCartas() {
 	is.close();
 }
 
-
 //leer archivo jugadores
-void leerArchivoJugadores() {
+void Sistema::leerArchivoJugadores() {
 	ifstream is("jugadores.txt");
 
 	if (is) {
@@ -112,8 +134,8 @@ void leerArchivoJugadores() {
 			getline(ss, nombre, ',');
 			cout << "nombre: " << nombre << endl;
 			// Obtenemos el idBilletera y descartamos el ';'
-			string idBilletera;
-			getline(ss, idBilletera, ',');
+			int numText;
+			getline(ss, numText, ',');
 			cout << "idBilletera: " << idBilletera << endl;
 
 			// Obtenemos el monto y descartamos el ';'
@@ -135,3 +157,4 @@ void leerArchivoJugadores() {
 	}
 
 }
+
