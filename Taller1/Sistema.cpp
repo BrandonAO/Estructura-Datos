@@ -20,7 +20,7 @@ using namespace std;
 #include "Blackjack.h"
 #include "Jugador.h"
 #include "Admin.h"
-
+#include <cstdlib>
 
 Sistema::Sistema()
 {
@@ -171,7 +171,6 @@ void Sistema::leerArchivoJugadores() {
 	
 }
 // consultar saldo de jugadores
-
 void Sistema::consultarSaldo() {
 	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
 	cout << "Iniciar cuenta administrador:" << endl;
@@ -181,18 +180,220 @@ void Sistema::consultarSaldo() {
 	cout << "Ingresar id admin;" << endl;
 	string idAdmin;
 	cin >> idAdmin;
-	if (blackjack->buscarAdmin(rutAdmin, idAdmin)==true) {
+	if (blackjack->buscarAdmin(rutAdmin, idAdmin) == true) {
 		cout << "Sesion iniciada:" << endl;
 		//lo busca por idBilltera, e imprime sus datos. y saldos
 		cout << "Ingresar idBilletera a buscar:" << endl;
 		int idBilletera;
 		cin >> idBilletera;
 		blackjack->buscarJugador(idBilletera);
-		
-	}else {
+
+	}
+	else {
 		cout << "Intente otra vez:" << endl;
 	}
+}
+	
+
+	// menu principal
+	void Sistema::menuPrincipal() {
+
+		bool bandera = false;
+		char tecla;
+
+		do
+		{
+			system("cls");
+			cin.clear();
+			cout << "Taller 1: BLACKJACK" << endl;
+			cout << "-----------" << endl << endl;
+			cout << "\t1 .- Iniciar partida " << endl;
+			cout << "\t2 .- Jugadores On-fire" << endl;
+			cout << "\t3 .- Configuracion " << endl;
+			cout << "\t4 .- Editar Jugador " << endl;
+			cout << "\t5 .- Salir " << endl << endl;
+			cout << "Elije una opcion: ";
+
+			cin >> tecla;
+
+			switch (tecla)
+			{
+			case '1':
+				system("cls");
+				cout << "Has elejido opcion 1.\n";
+				pausa();
+				break;
+
+			case '2':
+				system("cls");
+				cout << "Has elejido opcion 2.\n";
+				pausa();
+				break;
+
+			case '3':
+				system("cls");
+				cout << "Has elejido opcion 3.\n";
+				pausa();
+				break;
+
+			case '4':
+				system("cls");
+				cout << "Has elejido opcion 4.\n";
+				pausa();
+				break;
+
+			case '5':
+				cout << "Has elejido opcion salir.\n";
+				bandera = true;
+				//exit(1);
+				break;
+
+			default:
+				system("cls");
+				cout << "Opcion no valida.\a\n";
+				pausa();
+				break;
+			}
+		} while (bandera != true);
+
+		
+	}
+
+
+// pausa para el menu
+void Sistema::pausa()
+{
+	cout << "Pulsa una tecla para continuar...";
+	getwchar();
+	getwchar();
+}
+// menu 2 iniciar partida
+void Sistema::menuPrincipal() {
+
+	bool bandera = false;
+	char tecla;
+
+	do
+	{
+		system("cls");
+		cin.clear();
+		cout << "Taller 1: BLACKJACK ---> Iniciar Partida" << endl;
+		cout << "-----------" << endl << endl;
+		cout << "\t1 .- Jugar " << endl;
+		cout << "\t2 .- Agregar jugador" << endl;
+		cout << "\t3 .- Eliminar jugador " << endl;
+		cout << "\t4 .- Terminar partida " << endl;
+		cout << "\t5 .- Salir " << endl << endl;
+		cout << "Elije una opcion: ";
+
+		cin >> tecla;
+
+		switch (tecla)
+		{
+		case '1':
+			system("cls");
+			cout << "Has elejido opcion 1.\n";
+			pausa();
+			break;
+
+		case '2':
+			system("cls");
+			cout << "Has elejido opcion 2.\n";
+			pausa();
+			break;
+
+		case '3':
+			system("cls");
+			cout << "Has elejido opcion 3.\n";
+			pausa();
+			break;
+
+		case '4':
+			system("cls");
+			cout << "Has elejido opcion 4.\n";
+			pausa();
+			break;
+
+		case '5':
+			cout << "Has elejido opcion salir.\n";
+			bandera = true;
+			//exit(1);
+			break;
+
+		default:
+			system("cls");
+			cout << "Opcion no valida.\a\n";
+			pausa();
+			break;
+		}
+	} while (bandera != true);
+
 
 }
+
+// menu 3 configuracion
+void Sistema::menuPrincipal() {
+
+	bool bandera = false;
+	char tecla;
+
+	do
+	{
+		system("cls");
+		cin.clear();
+		cout << "Taller 1: BLACKJACK ---> Configuracion" << endl;
+		cout << "-----------" << endl << endl;
+		cout << "\t1 .- Cargar saldo a la billetera electronica " << endl;
+		cout << "\t2 .- Consultar saldo" << endl;
+		cout << "\t3 .- Registrar jugador " << endl;
+		cout << "\t4 .- Salir " << endl << endl;
+		cout << "Elije una opcion: ";
+
+		cin >> tecla;
+
+		switch (tecla)
+		{
+		case '1':
+			system("cls");
+			cout << "Has elejido opcion 1.\n";
+			pausa();
+			break;
+
+		case '2':
+			system("cls");
+			cout << "Has elejido opcion 2.\n";
+			pausa();
+			break;
+
+		case '3':
+			system("cls");
+			cout << "Has elejido opcion 3.\n";
+			pausa();
+			break;
+
+		case '4':
+			cout << "Has elejido opcion salir.\n";
+			bandera = true;
+			//exit(1);
+			break;
+
+		default:
+			system("cls");
+			cout << "Opcion no valida.\a\n";
+			pausa();
+			break;
+		}
+	} while (bandera != true);
+
+
+}
+
+
+
+
+
+
+
+	
 
 

@@ -17,6 +17,10 @@ public:
 
 	void leerArchivoJugadores();
 
+	void menuPrincipal();
+
+	void pausa();
+
 	void consultarSaldo();
 
 	
