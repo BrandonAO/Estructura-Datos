@@ -69,6 +69,7 @@ void Sistema::iniciarSistema() {
 }
 
 //lectura admin
+
 void Sistema::leerArchivoAdmin() {
 	ifstream is("admin.txt");
 
