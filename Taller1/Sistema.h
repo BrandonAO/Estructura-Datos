@@ -20,7 +20,26 @@ public:
 	void leerArchivoAdmin();
 	void leerArchivoCartas();
 	void leerArchivoJugadores();
+
+	void menuPrincipal();
+
+	void pausa();
+
+	void menuPrincipalIniciarPartida();
+
+	void menuPrincipalConfiguracion();
+
 	void consultarSaldo();
+
+	void CargarSaldo();
+
+	
+
+	
+
+
+	
+
 	void agregarAdmin(Admin&);
 	void imprimirAdmin();
 	bool buscarAdmin(string rut, string id);
