@@ -34,16 +34,15 @@ public:
 	void CargarSaldo();
 
 	
-
-	
-
-
-	
-
 	void agregarAdmin(Admin&);
 	void imprimirAdmin();
 	bool buscarAdmin(string rut, string id);
 	bool buscarJugador(int idBilletera);
+	bool buscarJugadorSaldo(int idBilletera, int saldo);
+	void editarJugador();
+	bool buscarJugadorEditar(string rut, string numero);
+	void eliminarJugadorMesa();
+	bool eliminarJugador(string rut);
 	void agregarJugador(Jugador&);
 	void registrarJugador();
 	int asignarBilletera();

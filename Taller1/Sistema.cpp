@@ -65,12 +65,8 @@ void Sistema::iniciarSistema() {
 	imprimirAdmin();
 	//consulta de saldo.
 	consultarSaldo();
-
-
-
+	
 }
-
-
 
 //lectura admin
 void Sistema::leerArchivoAdmin() {
@@ -238,7 +234,7 @@ void Sistema::consultarSaldo() {
 		cout << "Ingresar idBilletera a buscar:" << endl;
 		int idBilletera;
 		cin >> idBilletera;
-		blackjack->buscarJugador(idBilletera);
+		buscarJugador(idBilletera);
 
 	}
 	else {
@@ -255,7 +251,7 @@ void Sistema::CargarSaldo() {
 	cout << "Ingresar id admin;" << endl;
 	string idAdmin;
 	cin >> idAdmin;
-	if (blackjack->buscarAdmin(rutAdmin, idAdmin) == true) {
+	if (buscarAdmin(rutAdmin, idAdmin) == true) {
 		cout << "Sesion iniciada:" << endl;
 		//lo busca por idBilltera, luego pregunta cuanto saldo hay que cargar
 		cout << "Ingresar idBilletera a buscar:" << endl;
@@ -266,12 +262,9 @@ void Sistema::CargarSaldo() {
 		cin >> saldo;
 		if (saldo >=  1000 && saldo < 100000) {
 			//se carga el saldo ingresado por pantalla.
-
-
+			buscarJugadorSaldo(idBilletera, saldo);
 		}
 		
-
-
 	}
 	else {
 		cout << "Intente otra vez:" << endl;
@@ -481,7 +474,7 @@ void Sistema::menuPrincipalConfiguracion() {
 
 
 	
-
+// se agrega administrador a la lista
 void Sistema::agregarAdmin(Admin& admin) {
 	if (cantActualAdmin < maxAdmin) {
 		this->administradores[cantActualAdmin] = admin;
@@ -489,13 +482,14 @@ void Sistema::agregarAdmin(Admin& admin) {
 
 	}
 }
+//imprime los administradores registrados en el sistema
 void Sistema::imprimirAdmin()
 {
 	for (int i = 0; i < cantActualAdmin; i++) {
 		cout << "Rut: " << administradores[i].getRut() << "   Id: " << administradores[i].getId() << endl;
 	}
 }
-
+//busca administrador por rut e id
 bool Sistema::buscarAdmin(string rut, string id)
 {
 	for (int i = 0; i < cantActualAdmin; i++) {
@@ -509,6 +503,7 @@ bool Sistema::buscarAdmin(string rut, string id)
 	return false;
 }
 
+//buscar jugador por idBilletera retorna true si lo encuentra
 bool Sistema::buscarJugador(int idBilletera)
 {
 
@@ -523,4 +518,77 @@ bool Sistema::buscarJugador(int idBilletera)
 	return false;
 
 }
+//busca jugador y agrega saldo a su billetra electronica
+bool Sistema::buscarJugadorSaldo(int idBilletera, int saldo)
+{
+
+	for (int i = 0; i < cantJugadores; i++) {
+		if (jugadores[i].getIdBilletera() == idBilletera) {
+			cout << "Encontrado" << endl;
+			cout << "Nombre: " << jugadores[i].getNombre() << " idBilletera: " << jugadores[i].getIdBilletera() << " Saldo Actual:" << jugadores[i].getMonto() << endl;
+			cout << " Saldo anterior:" << jugadores[i].getMonto() << endl;
+			int nuevoSaldo = jugadores[i].getMonto() + saldo;
+			jugadores[i].setMonto(nuevoSaldo);
+			cout << " Nuevo Saldo:" << jugadores[i].getMonto() << endl;
+			return true;
+		}
+	}
+	cout << "No encontrado" << endl;
+	return false;
+
+}
+//edita el nombre del jugador buscado por rut
+void Sistema::editarJugador() {
+	cout << "Editar jugador" << endl;
+	cout << "Ingresar rut jugador:" << endl;
+	string rutJugador;
+	cin >> rutJugador;
+	cout << "Ingresar n uevo nombre para el jugador:" << endl;
+	string nombre;
+	cin >> nombre;
+	buscarJugadorEditar(rutJugador, nombre);
+	}
+//busca por rut y modifica el nombre del jugador
+bool Sistema::buscarJugadorEditar(string rut, string nombre)
+{
+	for (int i = 0; i < cantJugadores; i++) {
+		if (jugadores[i].getNombre().compare(nombre)==0) {
+			cout << "Encontrado" << endl;
+			cout << "Nombre actual: " << jugadores[i].getNombre()<< endl;
+			jugadores[i].setNombre(nombre);
+			cout << "Nuevo nombre:: " << jugadores[i].getNombre() << endl;
+			return true;
+		}
+	}
+	cout << "No encontrado" << endl;
+	return false;
+
+}
+
+// elimina jugador de la mesa
+void Sistema::eliminarJugadorMesa() {
+	cout << "Eliminar jugador" << endl;
+	cout << "Ingresar rut jugador:" << endl;
+	string rutJugador;
+	cin >> rutJugador;
+	eliminarJugador(rutJugador);
+}
+//metodo que elimina al jugador segun rut
+bool Sistema::eliminarJugador(string rut)
+{
+	for (int i = 0; i < cantJugadores; i++) {
+		if (jugadores[i].getRut().compare(rut) == 0) {
+			cout << "Encontrado" << endl;
+			cout << "Jugador rut: " << jugadores[i].getRut() << endl;
+			//aca se hace la eliminacion
+			
+			return true;
+		}
+	}
+	cout << "No encontrado" << endl;
+	return false;
+
+}
+
+
 

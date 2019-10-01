@@ -46,6 +46,11 @@ string Jugador::getNombre()
 	return nombre;
 }
 
+void Jugador::setNombre(string nombre)
+{
+	this->getNombre = nombre;
+}
+
 string Jugador::getRut()
 {
 	return rut;
@@ -74,5 +79,10 @@ int Jugador::getMonto()
 int Jugador::getPuntaje()
 {
 	return puntaje;
+}
+
+void Jugador::setMonto(int monto)
+{
+	this->getMonto = monto;
 }
 

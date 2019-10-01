@@ -25,6 +25,9 @@ public:
 	int getPartidasGanadas();
 	int getMonto();
 	int getPuntaje();
+	void setMonto(int monto);
+	string getNombre();
+	void setNombre(string nombre);
 };
 
 
