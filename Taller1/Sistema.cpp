@@ -182,8 +182,98 @@ void Sistema::leerArchivoJugadores() {
 
 }
 
-// Menu principal
-void Sistema::menuPrincipal() {
+void Sistema::agregarJugador(Jugador& jug) {
+	if (cantJugadores < max) {
+		jugadores[cantJugadores] = jug;
+		cantJugadores++;
+	}
+}
+
+void Sistema::registrarJugador() {
+
+	string nombre;
+	cout << "Ingrese nombre: " << endl;
+	cin >> nombre;
+
+	cout << "Ingrese rut: " << endl;
+	string rut;
+	cin >> rut;
+
+	int idBilletera = asignarBilletera();
+	Jugador* jug = new Jugador(nombre, rut, idBilletera);
+	agregarJugador(*jug);
+
+}
+
+int Sistema::asignarBilletera() {
+	for (int i = 0; i < 100; i++) {
+		if (billeteras[i] == false) {
+			billeteras[i] = true;
+			return i + 1;
+		}
+	}
+	return 0;
+
+}
+// consultar saldo de jugadores
+void Sistema::consultarSaldo() {
+	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
+	cout << "Iniciar cuenta administrador:" << endl;
+	cout << "Ingresar rut admin:" << endl;
+	string rutAdmin;
+	cin >> rutAdmin;
+	cout << "Ingresar clave admin;" << endl;
+	string claveAdmin;
+	cin >> claveAdmin;
+	if (buscarAdmin(rutAdmin, claveAdmin) == true) {
+		cout << "Sesion iniciada:" << endl;
+		//lo busca por idBilltera, e imprime sus datos. y saldos
+		cout << "Ingresar idBilletera a buscar:" << endl;
+		int idBilletera;
+		cin >> idBilletera;
+		blackjack->buscarJugador(idBilletera);
+
+	}
+	else {
+		cout << "Intente otra vez:" << endl;
+	}
+}
+// Cargar saldo a a la billetera
+void Sistema::CargarSaldo() {
+	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
+	cout << "Iniciar cuenta administrador:" << endl;
+	cout << "Ingresar rut admin:" << endl;
+	string rutAdmin;
+	cin >> rutAdmin;
+	cout << "Ingresar id admin;" << endl;
+	string idAdmin;
+	cin >> idAdmin;
+	if (blackjack->buscarAdmin(rutAdmin, idAdmin) == true) {
+		cout << "Sesion iniciada:" << endl;
+		//lo busca por idBilltera, luego pregunta cuanto saldo hay que cargar
+		cout << "Ingresar idBilletera a buscar:" << endl;
+		int idBilletera;
+		cin >> idBilletera;
+		cout << "Ingresar saldo a cargar [$1000 - 100000]:" << endl;
+		int saldo;
+		cin >> saldo;
+		if (saldo >=  1000 && saldo < 100000) {
+			//se carga el saldo ingresado por pantalla.
+
+
+		}
+		
+
+
+	}
+	else {
+		cout << "Intente otra vez:" << endl;
+	}
+}
+
+
+	// menu principal
+	void Sistema::menuPrincipal() {
 
 	bool bandera = false;
 	char tecla;
