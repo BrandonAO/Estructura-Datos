@@ -13,11 +13,13 @@ private:
 	int idBilletera;
 	int monto;
 	int puntaje;
+	int cartasActual;
 public:
 	Jugador();
 	Jugador(string, string, int, int, short int);
 	Jugador(string, string, int);
 	~Jugador();
+	bool ingresarCarta(Carta);
 	string getNombre();
 	string getRut();
 	Carta& getMano();
@@ -26,7 +28,6 @@ public:
 	int getMonto();
 	int getPuntaje();
 	void setMonto(int monto);
-	string getNombre();
 	void setNombre(string nombre);
 };
 

@@ -12,6 +12,7 @@ public:
 	Carta(string valor, string pinta);
 	string getPinta();
 	string getValor();
+	
 };
 
 

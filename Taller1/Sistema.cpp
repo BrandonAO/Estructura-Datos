@@ -46,10 +46,10 @@ void Sistema::iniciarSistema() {
 
 	leerArchivoCartas();
 	cout << "------------- Se han agregado las cartas. -------------" << endl;
-	blackjack->getMazo().imprimirCartas();
+	//blackjack->getMazo().imprimirCartas();
 	cout << "------------- Se mezclaran las cartas. -------------" << endl;
-	blackjack->getMazo().mezclarMazo();
-	blackjack->getMazo().imprimirCartas();
+	//blackjack->getMazo().mezclarMazo();
+	//blackjack->getMazo().imprimirCartas();
 
 	leerArchivoJugadores();
 	/*
@@ -62,14 +62,13 @@ void Sistema::iniciarSistema() {
 	*/
 	leerArchivoAdmin();
 	cout << "Se han agregado los administradores: " << endl;
-	imprimirAdmin();
+	//imprimirAdmin();
 	//consulta de saldo.
-	consultarSaldo();
-	
+	//consultarSaldo();
+	menuPrincipal();
 }
 
-//lectura admin
-
+// Lecturas
 void Sistema::leerArchivoAdmin() {
 	ifstream is("admin.txt");
 
@@ -101,7 +100,6 @@ void Sistema::leerArchivoAdmin() {
 	}
 
 }
-//lectura cartas
 void Sistema::leerArchivoCartas() {
 	ifstream is("cartas.txt");
 
@@ -135,8 +133,6 @@ void Sistema::leerArchivoCartas() {
 
 	is.close();
 }
-
-//leer archivo jugadores
 void Sistema::leerArchivoJugadores() {
 	ifstream is("jugadores.txt");
 
@@ -185,6 +181,213 @@ void Sistema::leerArchivoJugadores() {
 	}
 
 }
+
+// Menu principal
+void Sistema::menuPrincipal() {
+
+	bool bandera = false;
+	char tecla;
+
+	do
+	{
+		system("cls");
+		cin.clear();
+		cout << ".:::::::::: BLACKJACK ::::::::::." << endl;
+		cout << "-----------" << endl << endl;
+		cout << "\t1 .- Iniciar partida " << endl;
+		cout << "\t2 .- Jugadores On-fire" << endl;
+		cout << "\t3 .- Configuracion " << endl;
+		cout << "\t4 .- Editar Jugador " << endl;
+		cout << "\t5 .- Salir " << endl << endl;
+		cout << "Elije una opcion: ";
+
+		cin >> tecla;
+
+		switch (tecla)
+		{
+		case '1':
+			system("cls");
+			cout << "Has elejido opcion 1.\n";
+			menuPrincipalIniciarPartida();
+			pausa();
+			break;
+
+		case '2':
+			system("cls");
+			cout << "Has elejido opcion 2.\n";
+			pausa();
+			break;
+
+		case '3':
+			system("cls");
+			cout << "Has elejido opcion 3.\n";
+			menuPrincipalConfiguracion();
+			pausa();
+			break;
+
+		case '4':
+			system("cls");
+			cout << "Has elejido opcion 4.\n";
+			pausa();
+			break;
+
+		case '5':
+			cout << "Has elejido opcion salir.\n";
+			bandera = true;
+			//exit(1);
+			break;
+
+		default:
+			system("cls");
+			cout << "Opcion no valida.\a\n";
+			pausa();
+			break;
+		}
+	} while (bandera != true);
+
+
+}
+
+
+// pausa para el menu
+void Sistema::pausa()
+{
+	cout << "Pulsa una tecla para continuar...";
+	getwchar();
+}
+// menu 2 iniciar partida
+void Sistema::menuPrincipalIniciarPartida() {
+
+	bool bandera = false;
+	char tecla;
+
+	do
+	{
+		system("cls");
+		cin.clear();
+		cout << "          BLACKJACK ---> Iniciar Partida" << endl;
+		cout << "-----------" << endl << endl;
+		cout << "\t1 .- Jugar " << endl;
+		cout << "\t2 .- Agregar jugador" << endl;
+		cout << "\t3 .- Eliminar jugador " << endl;
+		cout << "\t4 .- Terminar partida " << endl;
+		cout << "\t5 .- Salir " << endl << endl;
+		cout << "Elije una opcion: ";
+
+		cin >> tecla;
+
+		switch (tecla)
+		{
+		case '1':
+			system("cls");
+			cout << "Has elejido opcion 1.\n";
+			pausa();
+			blackjack->imprimirJugadores();
+			pausa();
+			break;
+
+		case '2':
+			system("cls");
+			cout << "Has elejido opcion 2.\n";
+			pausa();
+			agregarJugadorMesa();
+			pausa();
+			break;
+
+		case '3':
+			system("cls");
+			cout << "Has elejido opcion 3.\n";
+
+			pausa();
+			eliminarJugadorMesa();
+			break;
+
+		case '4':
+			system("cls");
+			cout << "Has elejido opcion 4.\n";
+			pausa();
+			break;
+
+		case '5':
+			cout << "Has elejido opcion salir.\n";
+			bandera = true;
+			//exit(1);
+			break;
+
+		default:
+			system("cls");
+			cout << "Opcion no valida.\a\n";
+			pausa();
+			break;
+		}
+	} while (bandera != true);
+
+
+}
+
+// menu 3 configuracion
+void Sistema::menuPrincipalConfiguracion() {
+
+	bool bandera = false;
+	char tecla;
+
+	do
+	{
+		system("cls");
+		cin.clear();
+		cout << "Taller 1: BLACKJACK ---> Configuracion" << endl;
+		cout << "-----------" << endl << endl;
+		cout << "\t1 .- Cargar saldo a la billetera electronica " << endl;
+		cout << "\t2 .- Consultar saldo" << endl;
+		cout << "\t3 .- Registrar jugador " << endl;
+		cout << "\t4 .- Salir " << endl << endl;
+		cout << "Elije una opcion: ";
+
+		cin >> tecla;
+
+		switch (tecla)
+		{
+		case '1':
+			system("cls");
+			cout << "Has elejido opcion 1.\n";
+			pausa();
+			CargarSaldo();
+			pausa();
+			break;
+
+		case '2':
+			system("cls");
+			cout << "Has elejido opcion 2.\n";
+			pausa();
+			consultarSaldo();
+			pausa();
+			break;
+
+		case '3':
+			system("cls");
+			cout << "Has elejido opcion 3.\n";
+			pausa();
+			void registrarJugador();
+			pausa();
+			break;
+
+		case '4':
+			cout << "Has elejido opcion salir.\n";
+			bandera = true;
+			//exit(1);
+			break;
+
+		default:
+			system("cls");
+			cout << "Opcion no valida.\a\n";
+			pausa();
+			break;
+		}
+	} while (bandera != true);
+
+
+}
+
 
 void Sistema::agregarJugador(Jugador& jug) {
 	if (cantJugadores < max) {
@@ -242,6 +445,33 @@ void Sistema::consultarSaldo() {
 		cout << "Intente otra vez:" << endl;
 	}
 }
+
+void Sistema::agregarJugadorMesa()
+{
+	cout << "Ingrese el nombre del jugador: "<<endl;
+	string nombre;
+	getline(cin, nombre);
+
+	cout << "Ingrese el rut del jugador: " << endl;
+	string rut;
+	cin >> rut;
+
+	cout << "Ingrese la id de la billetera del jugador: " << endl;
+	int idBilletera;
+	cin >> idBilletera;
+	for (int i = 0; i < cantJugadores;i++) {
+		if (jugadores[i].getNombre().compare(nombre)==0 && jugadores[i].getRut().compare(rut)==0 && jugadores[i].getIdBilletera() == idBilletera) {
+			if (blackjack->agregarJugador(jugadores[i]) == true) {
+				cout << "El jugador " << jugadores[i].getNombre() << " se ha ingresado a la mesa." << endl;
+				pausa();
+				return;
+			}
+			
+		}
+	}
+	cout << "El jugador " << nombre << " no se ha encontrado." << endl;
+	pausa();
+}
 // Cargar saldo a a la billetera
 void Sistema::CargarSaldo() {
 	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
@@ -273,206 +503,7 @@ void Sistema::CargarSaldo() {
 }
 
 
-	// menu principal
-	void Sistema::menuPrincipal() {
-
-		bool bandera = false;
-		char tecla;
-
-		do
-		{
-			system("cls");
-			cin.clear();
-			cout << "Taller 1: BLACKJACK" << endl;
-			cout << "-----------" << endl << endl;
-			cout << "\t1 .- Iniciar partida " << endl;
-			cout << "\t2 .- Jugadores On-fire" << endl;
-			cout << "\t3 .- Configuracion " << endl;
-			cout << "\t4 .- Editar Jugador " << endl;
-			cout << "\t5 .- Salir " << endl << endl;
-			cout << "Elije una opcion: ";
-
-			cin >> tecla;
-
-			switch (tecla)
-			{
-			case '1':
-				system("cls");
-				cout << "Has elejido opcion 1.\n";
-				menuPrincipalIniciarPartida();
-				pausa();
-				break;
-
-			case '2':
-				system("cls");
-				cout << "Has elejido opcion 2.\n";
-				pausa();
-				break;
-
-			case '3':
-				system("cls");
-				cout << "Has elejido opcion 3.\n";
-				menuPrincipalConfiguracion();
-				pausa();
-				break;
-
-			case '4':
-				system("cls");
-				cout << "Has elejido opcion 4.\n";
-				pausa();
-				break;
-
-			case '5':
-				cout << "Has elejido opcion salir.\n";
-				bandera = true;
-				//exit(1);
-				break;
-
-			default:
-				system("cls");
-				cout << "Opcion no valida.\a\n";
-				pausa();
-				break;
-			}
-		} while (bandera != true);
-
-		
-	}
-
-
-// pausa para el menu
-void Sistema::pausa()
-{
-	cout << "Pulsa una tecla para continuar...";
-	getwchar();
-	getwchar();
-}
-// menu 2 iniciar partida
-void Sistema::menuPrincipalIniciarPartida() {
-
-	bool bandera = false;
-	char tecla;
-
-	do
-	{
-		system("cls");
-		cin.clear();
-		cout << "Taller 1: BLACKJACK ---> Iniciar Partida" << endl;
-		cout << "-----------" << endl << endl;
-		cout << "\t1 .- Jugar " << endl;
-		cout << "\t2 .- Agregar jugador" << endl;
-		cout << "\t3 .- Eliminar jugador " << endl;
-		cout << "\t4 .- Terminar partida " << endl;
-		cout << "\t5 .- Salir " << endl << endl;
-		cout << "Elije una opcion: ";
-
-		cin >> tecla;
-
-		switch (tecla)
-		{
-		case '1':
-			system("cls");
-			cout << "Has elejido opcion 1.\n";
-			pausa();
-			break;
-
-		case '2':
-			system("cls");
-			cout << "Has elejido opcion 2.\n";
-			pausa();
-			break;
-
-		case '3':
-			system("cls");
-			cout << "Has elejido opcion 3.\n";
-			pausa();
-			break;
-
-		case '4':
-			system("cls");
-			cout << "Has elejido opcion 4.\n";
-			pausa();
-			break;
-
-		case '5':
-			cout << "Has elejido opcion salir.\n";
-			bandera = true;
-			//exit(1);
-			break;
-
-		default:
-			system("cls");
-			cout << "Opcion no valida.\a\n";
-			pausa();
-			break;
-		}
-	} while (bandera != true);
-
-
-}
-
-// menu 3 configuracion
-void Sistema::menuPrincipalConfiguracion() {
-
-	bool bandera = false;
-	char tecla;
-
-	do
-	{
-		system("cls");
-		cin.clear();
-		cout << "Taller 1: BLACKJACK ---> Configuracion" << endl;
-		cout << "-----------" << endl << endl;
-		cout << "\t1 .- Cargar saldo a la billetera electronica " << endl;
-		cout << "\t2 .- Consultar saldo" << endl;
-		cout << "\t3 .- Registrar jugador " << endl;
-		cout << "\t4 .- Salir " << endl << endl;
-		cout << "Elije una opcion: ";
-
-		cin >> tecla;
-
-		switch (tecla)
-		{
-		case '1':
-			system("cls");
-			cout << "Has elejido opcion 1.\n";
-			pausa();
-			break;
-
-		case '2':
-			system("cls");
-			cout << "Has elejido opcion 2.\n";
-			pausa();
-			break;
-
-		case '3':
-			system("cls");
-			cout << "Has elejido opcion 3.\n";
-			pausa();
-			break;
-
-		case '4':
-			cout << "Has elejido opcion salir.\n";
-			bandera = true;
-			//exit(1);
-			break;
-
-		default:
-			system("cls");
-			cout << "Opcion no valida.\a\n";
-			pausa();
-			break;
-		}
-	} while (bandera != true);
-
-
-}
-
-
-
-
-
-
+	
 
 	
 // se agrega administrador a la lista
@@ -572,24 +603,9 @@ void Sistema::eliminarJugadorMesa() {
 	cout << "Ingresar rut jugador:" << endl;
 	string rutJugador;
 	cin >> rutJugador;
-	eliminarJugador(rutJugador);
+	blackjack->eliminarJugador(rutJugador);
 }
-//metodo que elimina al jugador segun rut
-bool Sistema::eliminarJugador(string rut)
-{
-	for (int i = 0; i < cantJugadores; i++) {
-		if (jugadores[i].getRut().compare(rut) == 0) {
-			cout << "Encontrado" << endl;
-			cout << "Jugador rut: " << jugadores[i].getRut() << endl;
-			//aca se hace la eliminacion
-			
-			return true;
-		}
-	}
-	cout << "No encontrado" << endl;
-	return false;
 
-}
 
 
 

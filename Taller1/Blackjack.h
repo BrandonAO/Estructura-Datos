@@ -19,6 +19,7 @@ public:
 	~Blackjack();
 	Mazo& getMazo();
 	bool agregarJugador(Jugador&);
-
+	bool eliminarJugador(string rut);
+	void imprimirJugadores();
 };
 

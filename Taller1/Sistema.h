@@ -17,34 +17,42 @@ private:
 public:
 	Sistema();
 	void iniciarSistema();
+	//Metodos para lectura
 	void leerArchivoAdmin();
 	void leerArchivoCartas();
 	void leerArchivoJugadores();
-
+	//Metodos menu principal
 	void menuPrincipal();
-
 	void pausa();
-
 	void menuPrincipalIniciarPartida();
-
 	void menuPrincipalConfiguracion();
 
-	void consultarSaldo();
-
-	void CargarSaldo();
-
+	//Metodos para el menu
 	
+		//Iniciar partida:
+			//****falta iniciar partida
+	void agregarJugadorMesa();
+	void eliminarJugadorMesa();
+			//****falta terminar partida
+
+		//Jugadores On-fire:
+			//*****falta
+
+		//Configuracion: debe pedir clave antes de mostrar el siguiente menú.
+	void CargarSaldo();
+	void consultarSaldo();
+	void registrarJugador();
+	int asignarBilletera();
+	void editarJugador();
+	bool buscarJugadorEditar(string rut, string numero);
+
+	//Metodos para los arreglos
 	void agregarAdmin(Admin&);
+	void agregarJugador(Jugador&);
 	void imprimirAdmin();
 	bool buscarAdmin(string rut, string id);
 	bool buscarJugador(int idBilletera);
 	bool buscarJugadorSaldo(int idBilletera, int saldo);
-	void editarJugador();
-	bool buscarJugadorEditar(string rut, string numero);
-	void eliminarJugadorMesa();
-	bool eliminarJugador(string rut);
-	void agregarJugador(Jugador&);
-	void registrarJugador();
-	int asignarBilletera();
+
 };
 

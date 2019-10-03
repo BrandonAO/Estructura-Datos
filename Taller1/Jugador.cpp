@@ -14,6 +14,7 @@ Jugador::Jugador()
 	mano = new Carta[10];
 	puntaje = 0;
 	monto = 0;
+	cartasActual = 0;
 
 }
 
@@ -26,7 +27,7 @@ Jugador::Jugador(string nombre, string rut, int monto, int idBilletera, short in
 	this->mano = new Carta[10];
 	this->puntaje = 0;
 	this->monto = monto;
-
+	this->cartasActual = 0;
 }
 
 Jugador::Jugador(string nombre, string rut, int idBilletera)
@@ -48,7 +49,7 @@ string Jugador::getNombre()
 
 void Jugador::setNombre(string nombre)
 {
-	this->getNombre = nombre;
+	this->nombre = nombre;
 }
 
 string Jugador::getRut()
@@ -78,11 +79,38 @@ int Jugador::getMonto()
 
 int Jugador::getPuntaje()
 {
+	for (int i = 0; i < cartasActual; i++) {
+		if (mano[i].getValor().compare("A")==0) {
+			if (puntaje + 11 <= 21) {
+				puntaje += 11;
+			}
+			if (puntaje + 1 <= 21) {
+				puntaje++;
+			}
+			else {
+				puntaje++;
+			}
+		}
+		if (mano[i].getValor().compare("J") == 0 || mano[i].getValor().compare("Q") == 0 || mano[i].getValor().compare("K") == 0) {
+			puntaje += 10;
+		}
+		puntaje += stoi(mano[i].getValor());
+		
+	}
 	return puntaje;
 }
 
 void Jugador::setMonto(int monto)
 {
-	this->getMonto = monto;
+	this->monto = monto;
 }
 
+bool Jugador::ingresarCarta(Carta car) {
+	if (cartasActual < 10) {
+		mano[cartasActual] = car;
+		cartasActual++;
+		return true;
+	}
+	cout << "No se puede ingresar mas cartas, la mano se encuentra llena" << endl;
+	return false;
+}
