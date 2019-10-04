@@ -95,14 +95,13 @@ int Jugador::getPuntaje()
 			puntaje += 10;
 		}
 		puntaje += stoi(mano[i].getValor());
-		
 	}
 	return puntaje;
 }
 
 void Jugador::setMonto(int monto)
 {
-	this->monto = monto;
+	this->monto += monto;
 }
 
 bool Jugador::ingresarCarta(Carta car) {
