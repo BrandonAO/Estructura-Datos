@@ -5,8 +5,10 @@ class Croupier
 {
 private:
 	Carta* mano;
+	int cantActual;
 public:
 	Croupier();
 	~Croupier();
+	bool ingresarCarta(Carta car);
 };
 

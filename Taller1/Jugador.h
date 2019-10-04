@@ -20,6 +20,7 @@ public:
 	Jugador(string, string, int);
 	~Jugador();
 	bool ingresarCarta(Carta);
+	void setPartidasGanadas(int partidasGanadasX);
 	string getNombre();
 	string getRut();
 	Carta& getMano();
@@ -28,6 +29,7 @@ public:
 	int getMonto();
 	int getPuntaje();
 	void setMonto(int monto);
+	void setMontoMenos(int monto);
 	void setNombre(string nombre);
 };
 

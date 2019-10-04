@@ -21,6 +21,6 @@ public:
 	bool agregarJugador(Jugador&);
 	bool eliminarJugador(string rut);
 	void imprimirJugadores();
-	void jugar();
+	void partida();
 };
 
