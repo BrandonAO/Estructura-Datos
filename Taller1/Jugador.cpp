@@ -102,7 +102,11 @@ int Jugador::getPuntaje()
 
 void Jugador::setMonto(int monto)
 {
-	this->monto = monto;
+	this->monto += monto;
+}
+void Jugador::setMontoMenos(int monto)
+{
+	this->monto -= monto;
 }
 
 bool Jugador::ingresarCarta(Carta car) {
@@ -113,4 +117,7 @@ bool Jugador::ingresarCarta(Carta car) {
 	}
 	cout << "No se puede ingresar mas cartas, la mano se encuentra llena" << endl;
 	return false;
+}
+void Jugador::setPartidasGanadas(int partidasGanadasX) {
+	partidasGanadas = partidasGanadas + partidasGanadasX;
 }

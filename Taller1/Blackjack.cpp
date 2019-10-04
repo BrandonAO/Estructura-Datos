@@ -3,6 +3,7 @@
 #include "Admin.h"
 #include "Jugador.h"
 #include <iostream>
+using namespace std;
 
 Blackjack::Blackjack()
 {
@@ -59,5 +60,96 @@ void Blackjack::imprimirJugadores() {
 		cout << "Nombre: " << jugadores[i].getNombre() << "   Id: " << jugadores[i].getMonto() << endl;
 	}
 }
+// iniciar partida
+
+void Blackjack::partida(){
+	cout << "Iniciar Partida: " << endl;
+	cout << "Repartiendo cartas: " << endl;
+	bool terminoPartida = false;
+	int apuestas[6];
+	while (terminoPartida!=true) {
+
+		// apuestas por jugador
+		for (int i = 0;i<cantActual; i++) {
+			cout << "Apuestas" << endl;
+			cout << "Jugador " << i+1 <<":" <<endl;
+			cout << "Monto Disponible: " << jugadores[i].getMonto << endl;
+			cout << "Ingresar monto a apostar: " << endl;
+			int montoApuesta = 0;
+			cin >> montoApuesta;
+			if (montoApuesta <= jugadores[i].getMonto) {
+				apuestas[i] = montoApuesta;
+				jugadores[i].setMontoMenos(montoApuesta);
+				}
+
+		}
+		//reparte al jugador croupier
+		for (int i = 0; i < cantActual; i++) {
+			bool cartasMano = jugadores[i].ingresarCarta(mazo.sacarCarta);
+			cartasMano = jugadores[i].ingresarCarta(mazo.sacarCarta);
+		}
+		bool cartasMano = croupier.ingresarCarta(mazo.sacarCarta);
+
+		// si gana solo con las cartas que se repartieron
+		for (int i = 0; i < cantActual; i++) {
+
+			if (jugadores[i].getPuntaje() == 21) {
+				jugadores[i].getPartidasGanadas.setPartidasGanadas(1);
+				apuestas[i] = apuestas[i] * 2;
+				jugadores[i].getMonto.setMonto(apuestas[i]);
+				cout << "Jugador" << i + 1 << " a GANADO" << endl;
+				terminoPartida = true;
+
+			}
+
+		}
+		if (terminoPartida == true) {
+			return;
+		}
+		//sigue partida
+		for (int i = 0; i < cantActual;i++) {
+			cout << "Jugador" << i + 1 << " Rendirse [1], Sacar carta [2], No sacar carta [3] " << endl;
+			int opcion = 0;
+			cin >> opcion;
+			if (opcion == 1) {
+				//rendirse
+				jugadores[i].setMonto(apuestas[i]/2);
+				eliminarJugador(jugadores[i].getRut);
+				cantActual--;
+				break;
+			}
+							
+			if (opcion==2) {
+				//sacar carta
+				bool masCartas = true;
+				while (masCartas=true) {
+				cout << "Jugador" << i + 1 << "¿sacar carta? SI[1], No[2]  " << endl;
+				int opcion2 = 0;
+					if (opcion2==1) {
+						cartasMano = jugadores[i].ingresarCarta(mazo.sacarCarta);
+
+					}
+					if (opcion2==2) {
+						masCartas = false;
+						break;
+					}
+
+				}
+
+
+			}
+			if (opcion == 3) {
+				//no sacar carta
+				
+			}
+		}
+		//sacar cartas croupier > 16
+
+
+	}
+
+
+}
+
 
 
