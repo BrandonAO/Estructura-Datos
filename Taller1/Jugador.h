@@ -14,6 +14,7 @@ private:
 	int monto;
 	int puntaje;
 	int cartasActual;
+	int cantJugadoresTotales;
 public:
 	Jugador();
 	Jugador(string, string, int, int, short int);
@@ -27,8 +28,10 @@ public:
 	int getIdBilletera();
 	int getPartidasGanadas();
 	int getMonto();
+	int getCantJugadoresTotales();
 	int getPuntaje();
 	void setMonto(int monto);
+	void setcantJugadoresTotales(int cantJugadoresTotales);
 	void setMontoMenos(int monto);
 	void setNombre(string nombre);
 };

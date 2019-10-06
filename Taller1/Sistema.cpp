@@ -173,6 +173,7 @@ void Sistema::leerArchivoJugadores() {
 
 			Jugador* jugador = new Jugador(nombre, rut, monto, idBilletera, partidasGanadas);
 			this->agregarJugador(*jugador);
+			this->jugadores->setcantJugadoresTotales(1);
 			billeteras[idBilletera - 1] = true;
 
 		}
@@ -696,6 +697,51 @@ void Sistema::eliminarJugadorMesa() {
 	blackjack->eliminarJugador(rutJugador);
 }
 
+//ordenar jugadores por partidas ganadas
 
+void Sistema::ordenarJugadores() {
+	for (int x = 0; x < jugadores->getCantJugadoresTotales - 1; x++) {
+
+		for (int k = 0; k < jugadores->getCantJugadoresTotales - 1 - x; k++) {
+
+			if (jugadores[k].getPartidasGanadas < jugadores[k + 1].getPartidasGanadas) {
+
+				Jugador aux;
+				aux = jugadores[k];
+				jugadores[k] = jugadores[k + 1];
+				jugadores[k + 1] = aux;
+			}
+
+
+		}
+
+
+	}
+}
+
+// mejores 10 jugadores
+void Sistema::jugadoresOnFire() {
+	ordenarJugadores();
+	for (int i = 0; i < jugadores->getCantJugadoresTotales; i++) {
+		cout << "Rut: " << jugadores[i].getRut() << "   Nombres: " << jugadores[i].getNombre <<"IdBilletera: " << jugadores[i].getIdBilletera <<"Monto: "  <<jugadores[i].getMonto <<"Partidas Ganadas: " << jugadores[i].getPartidasGanadas <<  endl;
+	}
+
+}
+
+// reescritura archivo jugadores.
+void Sistema:: escrituraArchivoJugadores()
+{
+	ofstream archivo;  // objeto de la clase ofstream
+
+	archivo.open("jugadores.txt");
+
+	for (int i = 0; i < jugadores->getCantJugadoresTotales; i++) {
+		archivo <<jugadores[i].getRut() <<","<<jugadores[i].getNombre<<","<<jugadores[i].getIdBilletera<<","<<jugadores[i].getMonto<<"," << jugadores[i].getPartidasGanadas << endl;
+	}
+
+
+	archivo.close();
+
+}
 
 

@@ -33,6 +33,9 @@ public:
 			//****falta iniciar partida
 	void agregarJugadorMesa();
 	void eliminarJugadorMesa();
+	void ordenarJugadores();
+	void jugadoresOnFire();
+	void escrituraArchivoJugadores();
 			//****falta terminar partida
 
 		//Jugadores On-fire:

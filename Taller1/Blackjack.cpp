@@ -144,12 +144,13 @@ void Blackjack::partida(){
 			}
 		}
 		//sacar cartas croupier > 16
-
+		cartasMano = croupier.ingresarCarta(mazo.sacarCarta);
+		
 
 	}
-
-
+	
 }
+
 
 
 

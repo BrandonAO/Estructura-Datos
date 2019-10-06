@@ -15,6 +15,7 @@ Jugador::Jugador()
 	puntaje = 0;
 	monto = 0;
 	cartasActual = 0;
+	cantJugadoresTotales = 0;
 
 }
 
@@ -28,6 +29,7 @@ Jugador::Jugador(string nombre, string rut, int monto, int idBilletera, short in
 	this->puntaje = 0;
 	this->monto = monto;
 	this->cartasActual = 0;
+	this->cantJugadoresTotales = 0;
 }
 
 Jugador::Jugador(string nombre, string rut, int idBilletera)
@@ -76,6 +78,10 @@ int Jugador::getMonto()
 {
 	return monto;
 }
+int Jugador::getCantJugadoresTotales()
+{
+	return cantJugadoresTotales;
+}
 
 int Jugador::getPuntaje()
 {
@@ -103,6 +109,10 @@ int Jugador::getPuntaje()
 void Jugador::setMonto(int monto)
 {
 	this->monto += monto;
+}
+void Jugador::setcantJugadoresTotales(int cantJugadoresTotales)
+{
+	this->cantJugadoresTotales += cantJugadoresTotales;
 }
 void Jugador::setMontoMenos(int monto)
 {
