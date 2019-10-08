@@ -7,7 +7,6 @@ using std::cout;
 using std::endl;
 
 #include <fstream>
-using std::ifstream;
 
 #include <string>
 using std::string;
@@ -26,12 +25,12 @@ using namespace std;
 
 
 void Sistema::imprimirCartas() {
-	
+
 	Carta c = blackjack->getMazo().sacarCarta();
 	string v = c.getValor();
 	string pinta = c.getPinta();
 	string p;
-	
+
 	if (v.compare("10") != 0) {
 		v = v + " ";
 	}
@@ -50,18 +49,17 @@ void Sistema::imprimirCartas() {
 	}
 
 	cout << "┌─────────────┐" << endl;
-	cout << "│ "<<v<<"          │" << endl;
-	cout << "│ "<<p<<"           │" << endl;
+	cout << "│ " << v << "          │" << endl;
+	cout << "│ " << p << "           │" << endl;
 	cout << "│    ♥   ♥    │" << endl;
 	cout << "│    ♥ ♥ ♥    │" << endl;
 	cout << "│    ♥ ♥ ♥    │" << endl;
 	cout << "│    ♥   ♥    │" << endl;
-	cout << "│           "<<p<<" │" << endl;
-	cout << "│           "<<v<<"│" << endl;
+	cout << "│           " << p << " │" << endl;
+	cout << "│           " << v << "│" << endl;
 	cout << "└─────────────┘" << endl;
 }
 
-bool billeteras[100]; //normal o con puntero para hacerlo dinamico, revisar.
 Sistema::Sistema()
 {
 	max = 100;
@@ -71,10 +69,8 @@ Sistema::Sistema()
 	cantJugadores = 0;
 	this->cantActualAdmin = 0;
 	this->maxAdmin = 20;
-	for (int i = 0; i < 100; i++) {
-		billeteras[i] = false;
-	}
-		
+	this->ultimaId = 0;
+
 }
 
 
@@ -199,6 +195,10 @@ void Sistema::leerArchivoJugadores() {
 			int idBilletera = stoi(numText);
 			cout << "idBilletera: " << numText << endl;
 
+			if (ultimaId < idBilletera) {
+				ultimaId = idBilletera;
+			}
+
 			// Obtenemos el monto y descartamos el ','
 			//pendiente castear a int
 
@@ -211,11 +211,9 @@ void Sistema::leerArchivoJugadores() {
 			getline(ss, numText);
 			short int partidasGanadas = stoi(numText);
 			cout << "partidas ganadas: " << partidasGanadas << endl;
-
+			
 			Jugador* jugador = new Jugador(nombre, rut, monto, idBilletera, partidasGanadas);
 			this->agregarJugador(*jugador);
-			this->jugadores->setcantJugadoresTotales(1);
-			billeteras[idBilletera - 1] = true;
 
 		}
 
@@ -225,8 +223,8 @@ void Sistema::leerArchivoJugadores() {
 }
 
 
-	// menu principal
-	void Sistema::menuPrincipal() {
+// menu principal
+void Sistema::menuPrincipal() {
 
 	bool bandera = false;
 	char tecla;
@@ -251,6 +249,8 @@ void Sistema::leerArchivoJugadores() {
 		case '1':
 			system("cls");
 			cout << "Has elejido opcion 1.\n";
+			pausa();
+			system("cls");
 			menuPrincipalIniciarPartida();
 			pausa();
 			break;
@@ -259,6 +259,10 @@ void Sistema::leerArchivoJugadores() {
 			system("cls");
 			cout << "Has elejido opcion 2.\n";
 			pausa();
+			system("cls");
+			jugadoresOnFire();
+			pausa();
+
 			break;
 
 		case '3':
@@ -295,8 +299,7 @@ void Sistema::leerArchivoJugadores() {
 // pausa para el menu
 void Sistema::pausa()
 {
-	cout << "Pulsa una tecla para continuar...";
-	getwchar();
+	system("pause");
 }
 // menu 2 iniciar partida
 void Sistema::menuPrincipalIniciarPartida() {
@@ -326,6 +329,9 @@ void Sistema::menuPrincipalIniciarPartida() {
 			cout << "Has elejido opcion 1.\n";
 			pausa();
 			blackjack->imprimirJugadores();
+			ordenarJugadores(0, cantJugadores - 1);
+			escrituraArchivoJugadores();
+
 			pausa();
 			break;
 
@@ -410,14 +416,13 @@ void Sistema::menuPrincipalConfiguracion() {
 			system("cls");
 			cout << "Has elejido opcion 3.\n";
 			pausa();
-			void registrarJugador();
+			registrarJugador();
 			pausa();
 			break;
 
 		case '4':
 			cout << "Has elejido opcion salir.\n";
 			bandera = true;
-			//exit(1);
 			break;
 
 		default:
@@ -443,28 +448,19 @@ void Sistema::registrarJugador() {
 
 	string nombre;
 	cout << "Ingrese nombre: " << endl;
-	cin >> nombre;
+	getline(cin, nombre);
 
 	cout << "Ingrese rut: " << endl;
 	string rut;
 	cin >> rut;
 
-	int idBilletera = asignarBilletera();
-	Jugador* jug = new Jugador(nombre, rut, idBilletera);
+	Jugador* jug = new Jugador(nombre, rut, ultimaId);
+	ultimaId++;
 	agregarJugador(*jug);
+	escrituraArchivoJugadores();
 
 }
 
-int Sistema::asignarBilletera() {
-	for (int i = 0; i < 100; i++) {
-		if (billeteras[i] == false) {
-			billeteras[i] = true;
-			return i + 1;
-		}
-	}
-	return 0;
-
-}
 // consultar saldo de jugadores
 void Sistema::consultarSaldo() {
 	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
@@ -491,7 +487,7 @@ void Sistema::consultarSaldo() {
 
 void Sistema::agregarJugadorMesa()
 {
-	cout << "Ingrese el nombre del jugador: "<<endl;
+	cout << "Ingrese el nombre del jugador: " << endl;
 	string nombre;
 	getline(cin, nombre);
 
@@ -502,14 +498,14 @@ void Sistema::agregarJugadorMesa()
 	cout << "Ingrese la id de la billetera del jugador: " << endl;
 	int idBilletera;
 	cin >> idBilletera;
-	for (int i = 0; i < cantJugadores;i++) {
-		if (jugadores[i].getNombre().compare(nombre)==0 && jugadores[i].getRut().compare(rut)==0 && jugadores[i].getIdBilletera() == idBilletera) {
+	for (int i = 0; i < cantJugadores; i++) {
+		if (jugadores[i].getNombre().compare(nombre) == 0 && jugadores[i].getRut().compare(rut) == 0 && jugadores[i].getIdBilletera() == idBilletera) {
 			if (blackjack->agregarJugador(jugadores[i]) == true) {
 				cout << "El jugador " << jugadores[i].getNombre() << " se ha ingresado a la mesa." << endl;
 				pausa();
 				return;
 			}
-			
+
 		}
 	}
 	cout << "El jugador " << nombre << " no se ha encontrado." << endl;
@@ -534,11 +530,11 @@ void Sistema::CargarSaldo() {
 		cout << "Ingresar saldo a cargar [$1000 - 100000]:" << endl;
 		int saldo;
 		cin >> saldo;
-		if (saldo >=  1000 && saldo < 100000) {
+		if (saldo >= 1000 && saldo < 100000) {
 			//se carga el saldo ingresado por pantalla.
 			buscarJugadorSaldo(idBilletera, saldo);
 		}
-		
+
 	}
 	else {
 		cout << "Intente otra vez:" << endl;
@@ -546,9 +542,9 @@ void Sistema::CargarSaldo() {
 }
 
 
-	
 
-	
+
+
 // se agrega administrador a la lista
 void Sistema::agregarAdmin(Admin& admin) {
 	if (cantActualAdmin < maxAdmin) {
@@ -618,18 +614,19 @@ void Sistema::editarJugador() {
 	cout << "Ingresar rut jugador:" << endl;
 	string rutJugador;
 	cin >> rutJugador;
-	cout << "Ingresar n uevo nombre para el jugador:" << endl;
+	cout << "Ingresar nuevo nombre para el jugador:" << endl;
 	string nombre;
 	cin >> nombre;
 	buscarJugadorEditar(rutJugador, nombre);
-	}
+	escrituraArchivoJugadores();
+}
 //busca por rut y modifica el nombre del jugador
 bool Sistema::buscarJugadorEditar(string rut, string nombre)
 {
 	for (int i = 0; i < cantJugadores; i++) {
-		if (jugadores[i].getNombre().compare(nombre)==0) {
+		if (jugadores[i].getNombre().compare(nombre) == 0) {
 			cout << "Encontrado" << endl;
-			cout << "Nombre actual: " << jugadores[i].getNombre()<< endl;
+			cout << "Nombre actual: " << jugadores[i].getNombre() << endl;
 			jugadores[i].setNombre(nombre);
 			cout << "Nuevo nombre:: " << jugadores[i].getNombre() << endl;
 			return true;
@@ -651,12 +648,23 @@ void Sistema::eliminarJugadorMesa() {
 
 //ordenar jugadores por partidas ganadas
 
-void Sistema::ordenarJugadores() {
-	for (int x = 0; x < jugadores->getCantJugadoresTotales - 1; x++) {
+void Sistema::ordenarJugadores(int low, int high)
+{
+	int mid;
+	if (low < high) {
+		mid = (low + high) / 2;
+		ordenarJugadores(low, mid);
+		ordenarJugadores(mid + 1, high);
+		merge(low, high, mid);
+	}
 
-		for (int k = 0; k < jugadores->getCantJugadoresTotales - 1 - x; k++) {
 
-			if (jugadores[k].getPartidasGanadas < jugadores[k + 1].getPartidasGanadas) {
+	/*
+	for (int x = 0; x < jugadores->getCantJugadoresTotales() - 1; x++) {
+
+		for (int k = 0; k < jugadores->getCantJugadoresTotales() - 1 - x; k++) {
+
+			if (jugadores[k].getPartidasGanadas() < jugadores[k + 1].getPartidasGanadas()) {
 
 				Jugador aux;
 				aux = jugadores[k];
@@ -669,31 +677,62 @@ void Sistema::ordenarJugadores() {
 
 
 	}
+	*/
+}
+
+void Sistema::merge(int low, int high, int mid) {
+	int i, j, k;
+	Jugador c[20];
+	i = low;
+	k = low;
+	j = mid + 1;
+	while (i <= mid && j <= high) {
+		if (jugadores[i].getPartidasGanadas() > jugadores[j].getPartidasGanadas()) {
+			c[k] = jugadores[i];
+			k++;
+			i++;
+		}
+		else {
+			c[k] = jugadores[j];
+			k++;
+			j++;
+		}
+	}
+	while (i <= mid) {
+		c[k] = jugadores[i];
+		k++;
+		i++;
+	}
+	while (j <= high) {
+		c[k] = jugadores[j];
+		k++;
+		j++;
+	}
+	for (i = low; i < k; i++) {
+		jugadores[i] = c[i];
+	}
+
 }
 
 // mejores 10 jugadores
 void Sistema::jugadoresOnFire() {
-	ordenarJugadores();
-	for (int i = 0; i < jugadores->getCantJugadoresTotales; i++) {
-		cout << "Rut: " << jugadores[i].getRut() << "   Nombres: " << jugadores[i].getNombre <<"IdBilletera: " << jugadores[i].getIdBilletera <<"Monto: "  <<jugadores[i].getMonto <<"Partidas Ganadas: " << jugadores[i].getPartidasGanadas <<  endl;
+	ordenarJugadores(0, cantJugadores - 1);
+	escrituraArchivoJugadores();
+	for (int i = 0; i < 10; i++) {
+		cout << "Rut: " << jugadores[i].getRut() << "   Nombre: " << jugadores[i].getNombre() << "  IdBilletera: " << jugadores[i].getIdBilletera() << "  Monto: " << jugadores[i].getMonto() << "  Partidas Ganadas: " << jugadores[i].getPartidasGanadas() << endl;
 	}
 
 }
 
 // reescritura archivo jugadores.
-void Sistema:: escrituraArchivoJugadores()
+void Sistema::escrituraArchivoJugadores()
 {
 	ofstream archivo;  // objeto de la clase ofstream
-
-	archivo.open("jugadores.txt");
-
-	for (int i = 0; i < jugadores->getCantJugadoresTotales; i++) {
-		archivo <<jugadores[i].getRut() <<","<<jugadores[i].getNombre<<","<<jugadores[i].getIdBilletera<<","<<jugadores[i].getMonto<<"," << jugadores[i].getPartidasGanadas << endl;
+	archivo.open("jugadores.txt", ios::out);
+	for (int i = 0; i < cantJugadores; i++) {
+		archivo << jugadores[i].getRut() << "," << jugadores[i].getNombre() << "," << jugadores[i].getIdBilletera() << "," << jugadores[i].getMonto() << "," << jugadores[i].getPartidasGanadas() << endl;
 	}
-
-
 	archivo.close();
-
 }
 
 

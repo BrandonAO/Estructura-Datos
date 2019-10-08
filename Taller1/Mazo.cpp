@@ -43,7 +43,7 @@ void Mazo::mezclarMazo() {
 			mazo[random] = swap;
 		}
 	}
-		
+
 }
 
 

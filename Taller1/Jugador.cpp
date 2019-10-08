@@ -86,7 +86,7 @@ int Jugador::getCantJugadoresTotales()
 int Jugador::getPuntaje()
 {
 	for (int i = 0; i < cartasActual; i++) {
-		if (mano[i].getValor().compare("A")==0) {
+		if (mano[i].getValor().compare("A") == 0) {
 			if (puntaje + 11 <= 21) {
 				puntaje += 11;
 			}

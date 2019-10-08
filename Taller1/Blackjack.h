@@ -24,6 +24,6 @@ public:
 	void imprimirJugadores();
 	//Metodos para el jugar
 	void partida();
-	bool verificarGanador();
+	bool verificarGanador(int);
 };
 
