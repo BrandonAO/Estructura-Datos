@@ -37,6 +37,7 @@ public:
 
 		//Jugadores On-fire:
 			//*****falta
+	void imprimirCartas();
 
 		//Configuracion: debe pedir clave antes de mostrar el siguiente menú.
 	void CargarSaldo();

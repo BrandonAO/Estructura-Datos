@@ -67,17 +67,18 @@ void Blackjack::imprimirJugadores() {
 // iniciar partida
 
 void Blackjack::partida(){
+	/*
 	cout << "Iniciar Partida: " << endl;
 	cout << "Repartiendo cartas: " << endl;
 	bool terminoPartida = false;
-	int apuestas[6];
+	
 	while (terminoPartida!=true) {
 
 		// apuestas por jugador
 		for (int i = 0;i<cantActual; i++) {
 			cout << "Apuestas" << endl;
 			cout << "Jugador " << i+1 <<":" <<endl;
-			cout << "Monto Disponible: " << jugadores[i].getMonto << endl;
+			cout << "Monto Disponible: " << jugadores[i].getMonto()<< endl;
 			cout << "Ingresar monto a apostar: " << endl;
 			int montoApuesta = 0;
 			cin >> montoApuesta;
@@ -87,27 +88,17 @@ void Blackjack::partida(){
 				}
 
 		}
-		//reparte al jugador croupier
+		//reparte al jugador 
 		for (int i = 0; i < cantActual; i++) {
 			bool cartasMano = jugadores[i].ingresarCarta(mazo.sacarCarta);
 			cartasMano = jugadores[i].ingresarCarta(mazo.sacarCarta);
 		}
+		//reparte al croupier
 		bool cartasMano = croupier.ingresarCarta(mazo.sacarCarta);
 
 		// si gana solo con las cartas que se repartieron
-		for (int i = 0; i < cantActual; i++) {
 
-			if (jugadores[i].getPuntaje() == 21) {
-				jugadores[i].getPartidasGanadas.setPartidasGanadas(1);
-				apuestas[i] = apuestas[i] * 2;
-				jugadores[i].getMonto.setMonto(apuestas[i]);
-				cout << "Jugador" << i + 1 << " a GANADO" << endl;
-				terminoPartida = true;
-
-			}
-
-		}
-		if (terminoPartida == true) {
+		if (verificarGanador() == true) {
 			return;
 		}
 		//sigue partida
@@ -144,15 +135,36 @@ void Blackjack::partida(){
 			}
 			if (opcion == 3) {
 				//no sacar carta
-				
 			}
 		}
 		//sacar cartas croupier > 16
 
+		 
+		while (croupier.getPuntaje()<16) {
+			bool cartasMano = croupier.ingresarCarta(mazo.sacarCarta);
+		}
 
 	}
+	*/
 
+}
 
+bool Blackjack::verificarGanador()
+{
+	bool terminoPartida=false;
+	for (int i = 0; i < cantActual; i++) {
+
+		if (jugadores[i].getPuntaje() == 21) {
+			jugadores[i].setPartidasGanadas(1);
+			apuestas[i] = apuestas[i] * 2;
+			jugadores[i].setMonto(apuestas[i]);
+			cout << "Jugador" << i + 1 << " a GANADO" << endl;
+			terminoPartida = true;
+
+		}
+
+	}
+	return terminoPartida;
 }
 
 

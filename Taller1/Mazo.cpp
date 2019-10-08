@@ -2,6 +2,9 @@
 #include "Carta.h"
 #include <cstdlib>
 #include <iostream>
+#include <stdio.h> 
+#include <stdlib.h> 
+#include "time.h"
 
 Mazo::Mazo()
 {
@@ -23,19 +26,26 @@ void Mazo::agregarCarta(Carta& car) {
 }
 
 Carta Mazo::sacarCarta() {
-	int ultima = cantActual;
+	//int random = rand() % cantActual;
+	//Carta carta = mazo[random];
+	//mazo[random] = mazo[cantActual - 1];
 	cantActual--;
-	return mazo[ultima];
+	return mazo[cantActual];
 }
 
 void Mazo::mezclarMazo() {
-	for (int i = 0; i < cantActual; ++i) {
-		int random = rand() % cantActual;
-		Carta swap = mazo[i];
-		mazo[i] = mazo[random];
-		mazo[random] = swap;
+	srand((unsigned int)time(0));
+	for (int j = 0; j < 2; j++) {
+		for (int i = 0; i < cantActual; ++i) {
+			int random = rand() % cantActual;
+			Carta swap = mazo[i];
+			mazo[i] = mazo[random];
+			mazo[random] = swap;
+		}
 	}
+		
 }
+
 
 void Mazo::imprimirCartas() {
 	for (int i = 0; i < cantActual; i++) {

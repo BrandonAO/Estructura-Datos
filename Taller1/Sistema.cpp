@@ -1,5 +1,7 @@
+﻿#pragma execution_character_set( "utf-8" )
 #include "Sistema.h"
 #include <iostream>
+#include <Windows.h>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -21,6 +23,43 @@ using namespace std;
 #include "Jugador.h"
 #include "Admin.h"
 #include <cstdlib>
+
+
+void Sistema::imprimirCartas() {
+	
+	Carta c = blackjack->getMazo().sacarCarta();
+	string v = c.getValor();
+	string pinta = c.getPinta();
+	string p;
+	
+	if (v.compare("10") != 0) {
+		v = v + " ";
+	}
+
+	if (pinta.compare("Corazones") == 0) {
+		p = "♥";
+	}
+	if (pinta.compare("Trebol") == 0) {
+		p = "♣";
+	}
+	if (pinta.compare("Pica") == 0) {
+		p = "♠";
+	}
+	if (pinta.compare("Diamante") == 0) {
+		p = "♦";
+	}
+
+	cout << "┌─────────────┐" << endl;
+	cout << "│ "<<v<<"          │" << endl;
+	cout << "│ "<<p<<"           │" << endl;
+	cout << "│    ♥   ♥    │" << endl;
+	cout << "│    ♥ ♥ ♥    │" << endl;
+	cout << "│    ♥ ♥ ♥    │" << endl;
+	cout << "│    ♥   ♥    │" << endl;
+	cout << "│           "<<p<<" │" << endl;
+	cout << "│           "<<v<<"│" << endl;
+	cout << "└─────────────┘" << endl;
+}
 
 bool billeteras[100]; //normal o con puntero para hacerlo dinamico, revisar.
 Sistema::Sistema()
@@ -48,7 +87,7 @@ void Sistema::iniciarSistema() {
 	cout << "------------- Se han agregado las cartas. -------------" << endl;
 	//blackjack->getMazo().imprimirCartas();
 	cout << "------------- Se mezclaran las cartas. -------------" << endl;
-	//blackjack->getMazo().mezclarMazo();
+	blackjack->getMazo().mezclarMazo();
 	//blackjack->getMazo().imprimirCartas();
 
 	leerArchivoJugadores();
@@ -65,6 +104,8 @@ void Sistema::iniciarSistema() {
 	//imprimirAdmin();
 	//consulta de saldo.
 	//consultarSaldo();
+	imprimirCartas();
+	pausa();
 	menuPrincipal();
 }
 
@@ -180,95 +221,6 @@ void Sistema::leerArchivoJugadores() {
 		is.close();
 	}
 
-}
-
-void Sistema::agregarJugador(Jugador& jug) {
-	if (cantJugadores < max) {
-		jugadores[cantJugadores] = jug;
-		cantJugadores++;
-	}
-}
-
-void Sistema::registrarJugador() {
-
-	string nombre;
-	cout << "Ingrese nombre: " << endl;
-	cin >> nombre;
-
-	cout << "Ingrese rut: " << endl;
-	string rut;
-	cin >> rut;
-
-	int idBilletera = asignarBilletera();
-	Jugador* jug = new Jugador(nombre, rut, idBilletera);
-	agregarJugador(*jug);
-
-}
-
-int Sistema::asignarBilletera() {
-	for (int i = 0; i < 100; i++) {
-		if (billeteras[i] == false) {
-			billeteras[i] = true;
-			return i + 1;
-		}
-	}
-	return 0;
-
-}
-// consultar saldo de jugadores
-void Sistema::consultarSaldo() {
-	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
-	cout << "Iniciar cuenta administrador:" << endl;
-	cout << "Ingresar rut admin:" << endl;
-	string rutAdmin;
-	cin >> rutAdmin;
-	cout << "Ingresar clave admin;" << endl;
-	string claveAdmin;
-	cin >> claveAdmin;
-	if (buscarAdmin(rutAdmin, claveAdmin) == true) {
-		cout << "Sesion iniciada:" << endl;
-		//lo busca por idBilltera, e imprime sus datos. y saldos
-		cout << "Ingresar idBilletera a buscar:" << endl;
-		int idBilletera;
-		cin >> idBilletera;
-		buscarJugador(idBilletera);
-
-	}
-	else {
-		cout << "Intente otra vez:" << endl;
-	}
-}
-// Cargar saldo a a la billetera
-void Sistema::CargarSaldo() {
-	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
-	cout << "Iniciar cuenta administrador:" << endl;
-	cout << "Ingresar rut admin:" << endl;
-	string rutAdmin;
-	cin >> rutAdmin;
-	cout << "Ingresar id admin;" << endl;
-	string idAdmin;
-	cin >> idAdmin;
-	if (buscarAdmin(rutAdmin, idAdmin) == true) {
-		cout << "Sesion iniciada:" << endl;
-		//lo busca por idBilltera, luego pregunta cuanto saldo hay que cargar
-		cout << "Ingresar idBilletera a buscar:" << endl;
-		int idBilletera;
-		cin >> idBilletera;
-		cout << "Ingresar saldo a cargar [$1000 - 100000]:" << endl;
-		int saldo;
-		cin >> saldo;
-		if (saldo >=  1000 && saldo < 100000) {
-			//se carga el saldo ingresado por pantalla.
-
-
-		}
-		
-
-
-	}
-	else {
-		cout << "Intente otra vez:" << endl;
-	}
 }
 
 

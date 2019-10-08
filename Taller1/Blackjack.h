@@ -14,6 +14,7 @@ private:
 	int max;
 	Croupier croupier;
 	Mazo mazo;
+	int apuestas[6];
 public:
 	Blackjack();
 	~Blackjack();
@@ -21,6 +22,8 @@ public:
 	bool agregarJugador(Jugador&);
 	bool eliminarJugador(string rut);
 	void imprimirJugadores();
+	//Metodos para el jugar
 	void partida();
+	bool verificarGanador();
 };
 
