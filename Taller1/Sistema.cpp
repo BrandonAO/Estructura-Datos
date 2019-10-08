@@ -232,7 +232,7 @@ void Sistema::consultarSaldo() {
 		cout << "Ingresar idBilletera a buscar:" << endl;
 		int idBilletera;
 		cin >> idBilletera;
-		blackjack->buscarJugador(idBilletera);
+		buscarJugador(idBilletera);
 
 	}
 	else {
@@ -249,7 +249,7 @@ void Sistema::CargarSaldo() {
 	cout << "Ingresar id admin;" << endl;
 	string idAdmin;
 	cin >> idAdmin;
-	if (blackjack->buscarAdmin(rutAdmin, idAdmin) == true) {
+	if (buscarAdmin(rutAdmin, idAdmin) == true) {
 		cout << "Sesion iniciada:" << endl;
 		//lo busca por idBilltera, luego pregunta cuanto saldo hay que cargar
 		cout << "Ingresar idBilletera a buscar:" << endl;

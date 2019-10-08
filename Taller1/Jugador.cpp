@@ -101,7 +101,6 @@ int Jugador::getPuntaje()
 			puntaje += 10;
 		}
 		puntaje += stoi(mano[i].getValor());
-		
 	}
 	return puntaje;
 }

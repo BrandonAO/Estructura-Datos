@@ -18,4 +18,5 @@ string Carta::getPinta() {
 
 string Carta::getValor() {
 	return valor;
+	bool n = jugadores[i].
 }

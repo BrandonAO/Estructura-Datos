@@ -59,6 +59,10 @@ void Blackjack::imprimirJugadores() {
 	for (int i = 0; i < max; i++) {
 		cout << "Nombre: " << jugadores[i].getNombre() << "   Id: " << jugadores[i].getMonto() << endl;
 	}
+
+
+
+
 }
 // iniciar partida
 
@@ -150,6 +154,8 @@ void Blackjack::partida(){
 	}
 	
 }
+
+
 
 
 
