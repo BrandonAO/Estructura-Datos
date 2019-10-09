@@ -24,41 +24,7 @@ using namespace std;
 #include <cstdlib>
 
 
-void Sistema::imprimirCartas() {
 
-	Carta c = blackjack->getMazo().sacarCarta();
-	string v = c.getValor();
-	string pinta = c.getPinta();
-	string p;
-
-	if (v.compare("10") != 0) {
-		v = v + " ";
-	}
-
-	if (pinta.compare("Corazones") == 0) {
-		p = "♥";
-	}
-	if (pinta.compare("Trebol") == 0) {
-		p = "♣";
-	}
-	if (pinta.compare("Pica") == 0) {
-		p = "♠";
-	}
-	if (pinta.compare("Diamante") == 0) {
-		p = "♦";
-	}
-
-	cout << "┌─────────────┐" << endl;
-	cout << "│ " << v << "          │" << endl;
-	cout << "│ " << p << "           │" << endl;
-	cout << "│    ♥   ♥    │" << endl;
-	cout << "│    ♥ ♥ ♥    │" << endl;
-	cout << "│    ♥ ♥ ♥    │" << endl;
-	cout << "│    ♥   ♥    │" << endl;
-	cout << "│           " << p << " │" << endl;
-	cout << "│           " << v << "│" << endl;
-	cout << "└─────────────┘" << endl;
-}
 
 Sistema::Sistema()
 {
@@ -80,27 +46,10 @@ void Sistema::iniciarSistema() {
 	//lecturas
 
 	leerArchivoCartas();
-	cout << "------------- Se han agregado las cartas. -------------" << endl;
-	//blackjack->getMazo().imprimirCartas();
-	cout << "------------- Se mezclaran las cartas. -------------" << endl;
 	blackjack->getMazo().mezclarMazo();
-	//blackjack->getMazo().imprimirCartas();
-
-	leerArchivoJugadores();
-	/*
-	for (int i = 0; i < cantJugadores; i++) {
-		cout << "Nombre: " << jugadores[i].getNombre() << "   Id: " << jugadores[i].getIdBilletera() << endl;
-	}
-	for (int i = 0; i < 100; i++) {
-		cout << "id: " << i + 1 << "   estado: " << billeteras[i] << endl;
-	}
-	*/
 	leerArchivoAdmin();
-	cout << "Se han agregado los administradores: " << endl;
-	//imprimirAdmin();
-	//consulta de saldo.
-	//consultarSaldo();
-	imprimirCartas();
+	leerArchivoJugadores();
+
 	pausa();
 	menuPrincipal();
 }
@@ -121,13 +70,11 @@ void Sistema::leerArchivoAdmin() {
 			// Obtenemos el rut y descartamos el ';'
 			string rut;
 			getline(ss, rut, ',');
-			cout << "rut: " << rut << endl;
 
 
 			// Obtenemos el id, este es el resto de la linea
 			string id;
 			getline(ss, id);
-			cout << "id: " << id << endl;
 			Admin* admin = new Admin(rut, id);
 			agregarAdmin(*admin);
 			cout << endl;
@@ -183,17 +130,14 @@ void Sistema::leerArchivoJugadores() {
 			// Obtenemos el rut y descartamos el ','
 			string rut;
 			getline(ss, rut, ',');
-			cout << "rut: " << rut << endl;
 
 			// Obtenemos el nombre y descartamos el ','
 			string nombre;
 			getline(ss, nombre, ',');
-			cout << "nombre: " << nombre << endl;
 			// Obtenemos el idBilletera y descartamos el ','
 			string numText;
 			getline(ss, numText, ',');
 			int idBilletera = stoi(numText);
-			cout << "idBilletera: " << numText << endl;
 
 			if (ultimaId < idBilletera) {
 				ultimaId = idBilletera;
@@ -204,13 +148,10 @@ void Sistema::leerArchivoJugadores() {
 
 			getline(ss, numText, ',');
 			int monto = stoi(numText);
-			cout << "monto: " << monto << endl;
-
 			// Obtenemos el partidasGanadas, es el resto de la linea
 
 			getline(ss, numText);
 			short int partidasGanadas = stoi(numText);
-			cout << "partidas ganadas: " << partidasGanadas << endl;
 
 			Jugador* jugador = new Jugador(nombre, rut, monto, idBilletera, partidasGanadas);
 			this->agregarJugador(*jugador);
@@ -322,7 +263,6 @@ void Sistema::menuPrincipalIniciarPartida() {
 			system("cls");
 			cout << "Has elegido opcion 1.\n";
 			blackjack->partida();
-			blackjack->imprimirJugadores();
 			ordenarJugadores(0, cantJugadores - 1);
 			escrituraArchivoJugadores();
 
@@ -480,15 +420,16 @@ void Sistema::consultarSaldo() {
 
 void Sistema::agregarJugadorMesa()
 {
-	cout << "Ingrese el nombre del jugador: " << endl;
 	string nombre;
+	string rut;
+	cout << "Ingrese el nombre del jugador:" << endl;
 	getline(cin, nombre);
 
-	cout << "Ingrese el rut del jugador: " << endl;
-	string rut;
+	cout << "Ingrese el rut del jugador:" << endl;
+	
 	getline(cin, rut);
 
-	cout << "Ingrese la id de la billetera del jugador: " << endl;
+	cout << "Ingrese la id de la billetera del jugador:" << endl;
 	int idBilletera;
 	cin >> idBilletera;
 	for (int i = 0; i < cantJugadores; i++) {

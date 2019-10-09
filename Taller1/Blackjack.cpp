@@ -1,8 +1,9 @@
-#include "Blackjack.h"
+ï»¿#include "Blackjack.h"
 #include "Croupier.h"
 #include "Admin.h"
 #include "Jugador.h"
 #include <iostream>
+#include <Windows.h>
 using namespace std;
 
 Blackjack::Blackjack()
@@ -83,6 +84,10 @@ void Blackjack::imprimirJugadores() {
 // iniciar partida
 
 void Blackjack::partida() {
+	if (cantActual == 0) {
+		cout << "* Debe agregar jugadores para iniciar una ronda." << endl;
+		return;
+	}
 
 	cout << "Iniciar Partida: " << endl;
 	cout << "Repartiendo cartas: " << endl;
@@ -121,6 +126,7 @@ void Blackjack::partida() {
 			cout << "Jugador " << jugadores[i].getNombre() << " a GANADO!!" << endl;
 		}
 	}
+	
 
 	//reparte al croupier
 	bool as = false;
@@ -128,13 +134,14 @@ void Blackjack::partida() {
 	if (croupier.getPuntaje() == 11) {
 		as = true;
 	}
+	imprimirCartas();
 
 
 	//sigue partida
 	for (int i = 0; i < cantActual; i++) {
 		int opcion = 0;
 		if (!as) {
-			cout << "Jugador" << jugadores[i].getNombre() << " ¿Quiere rendirse? SI[1] NO[0]" << endl;
+			cout << "Jugador" << jugadores[i].getNombre() << " Â¿Quiere rendirse? SI[1] NO[0]" << endl;
 
 			cin >> opcion;
 			if (opcion == 1) {
@@ -157,7 +164,8 @@ void Blackjack::partida() {
 				//sacar carta
 				bool masCartas = true;
 				while (masCartas) {
-					cout << "Jugador " << jugadores[i].getNombre() << " ¿sacar carta? Si [1], No [2]  " << endl;
+					imprimirCartas();
+					cout << "Jugador " << jugadores[i].getNombre() << " Â¿sacar carta? Si [1], No [2]  " << endl;
 					int opcion2 = 0;
 					cin >> opcion2;
 					if (opcion2 == 1) {
@@ -181,13 +189,37 @@ void Blackjack::partida() {
 
 	while (croupier.getPuntaje() < 16) {
 		bool cartasMano = croupier.ingresarCarta(mazo.sacarCarta());
+		imprimirCartas();
 	}
 
 	verificarGanador(croupier.getPuntaje(), false);
 
 }
 
+void Blackjack::imprimirCartas() {
+	system("cls");
+	Carta c = mazo.sacarCarta();
+	string v = c.getValor();
+	string pinta = c.getPinta();
+	
+	for (int i = 0; i < cantActual; i++) {
+		if (!jugadores[i].getRetiroRonda()) {
+			cout << "Jugador " << jugadores[i].getNombre() << " sus cartas: " << endl;
+			for (int i = 0; i < jugadores[i].getCartasActual();i++) {
+				cout << v << pinta << ", " ;
+			}
+		}
+		cout << "" << endl;
+	}
 
+	
+	cout << "Croupier sus cartas: " << endl;
+	for (int i = 0; i < jugadores[i].getCartasActual(); i++) {
+			cout << v << pinta << ", ";
+	}
+	cout << "" << endl;
+
+}
 
 
 bool Blackjack::verificarGanador(int comparador, bool forma)

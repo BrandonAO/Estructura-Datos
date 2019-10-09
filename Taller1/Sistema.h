@@ -61,6 +61,5 @@ public:
 
 	//Utilidades:
 	void escrituraArchivoJugadores();
-	void imprimirCartas();
 };
 

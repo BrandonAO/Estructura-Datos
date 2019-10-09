@@ -128,6 +128,10 @@ bool Jugador::ingresarCarta(Carta car) {
 	cout << "No se puede ingresar mas cartas, la mano se encuentra llena" << endl;
 	return false;
 }
+int Jugador::getCartasActual()
+{
+	return cartasActual;
+}
 void Jugador::setPartidasGanadas(int partidasGanadasX) {
 	partidasGanadas = partidasGanadas + partidasGanadasX;
 }

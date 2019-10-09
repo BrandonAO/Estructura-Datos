@@ -22,6 +22,7 @@ public:
 	Jugador(string, string, int);
 	~Jugador();
 	bool ingresarCarta(Carta);
+	int getCartasActual();
 	void setPartidasGanadas(int partidasGanadasX);
 	void setRetiroRonda(bool);
 	bool getRetiroRonda();
