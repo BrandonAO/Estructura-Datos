@@ -15,6 +15,7 @@ private:
 	int puntaje;
 	int cartasActual;
 	int cantJugadoresTotales;
+	bool retiroRonda;
 public:
 	Jugador();
 	Jugador(string, string, int, int, short int);
@@ -22,6 +23,8 @@ public:
 	~Jugador();
 	bool ingresarCarta(Carta);
 	void setPartidasGanadas(int partidasGanadasX);
+	void setRetiroRonda(bool);
+	bool getRetiroRonda();
 	string getNombre();
 	string getRut();
 	Carta& getMano();

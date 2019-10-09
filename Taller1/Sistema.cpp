@@ -211,7 +211,7 @@ void Sistema::leerArchivoJugadores() {
 			getline(ss, numText);
 			short int partidasGanadas = stoi(numText);
 			cout << "partidas ganadas: " << partidasGanadas << endl;
-			
+
 			Jugador* jugador = new Jugador(nombre, rut, monto, idBilletera, partidasGanadas);
 			this->agregarJugador(*jugador);
 
@@ -238,8 +238,7 @@ void Sistema::menuPrincipal() {
 		cout << "\t1 .- Iniciar partida " << endl;
 		cout << "\t2 .- Jugadores On-fire" << endl;
 		cout << "\t3 .- Configuracion " << endl;
-		cout << "\t4 .- Editar Jugador " << endl;
-		cout << "\t5 .- Salir " << endl << endl;
+		cout << "\t4 .- Salir " << endl << endl;
 		cout << "Elije una opcion: ";
 
 		cin >> tecla;
@@ -248,7 +247,7 @@ void Sistema::menuPrincipal() {
 		{
 		case '1':
 			system("cls");
-			cout << "Has elejido opcion 1.\n";
+			cout << "Has elegido opcion 1.\n";
 			pausa();
 			system("cls");
 			menuPrincipalIniciarPartida();
@@ -257,7 +256,7 @@ void Sistema::menuPrincipal() {
 
 		case '2':
 			system("cls");
-			cout << "Has elejido opcion 2.\n";
+			cout << "Has elegido opcion 2.\n";
 			pausa();
 			system("cls");
 			jugadoresOnFire();
@@ -267,21 +266,16 @@ void Sistema::menuPrincipal() {
 
 		case '3':
 			system("cls");
-			cout << "Has elejido opcion 3.\n";
+			cout << "Has elegido opcion 3.\n";
 			menuPrincipalConfiguracion();
 			pausa();
 			break;
 
 		case '4':
 			system("cls");
-			cout << "Has elejido opcion 4.\n";
+			cout << "Has elegido opcion salir 4.\n";
 			pausa();
-			break;
-
-		case '5':
-			cout << "Has elejido opcion salir.\n";
 			bandera = true;
-			//exit(1);
 			break;
 
 		default:
@@ -311,8 +305,8 @@ void Sistema::menuPrincipalIniciarPartida() {
 	{
 		system("cls");
 		cin.clear();
-		cout << "          BLACKJACK ---> Iniciar Partida" << endl;
-		cout << "-----------" << endl << endl;
+		cout << ".:::::::::: BLACKJACK  ::::::::::." << endl;
+		cout << "-----------> Iniciar Partida" << endl << endl;
 		cout << "\t1 .- Jugar " << endl;
 		cout << "\t2 .- Agregar jugador" << endl;
 		cout << "\t3 .- Eliminar jugador " << endl;
@@ -326,8 +320,8 @@ void Sistema::menuPrincipalIniciarPartida() {
 		{
 		case '1':
 			system("cls");
-			cout << "Has elejido opcion 1.\n";
-			pausa();
+			cout << "Has elegido opcion 1.\n";
+			blackjack->partida();
 			blackjack->imprimirJugadores();
 			ordenarJugadores(0, cantJugadores - 1);
 			escrituraArchivoJugadores();
@@ -337,30 +331,27 @@ void Sistema::menuPrincipalIniciarPartida() {
 
 		case '2':
 			system("cls");
-			cout << "Has elejido opcion 2.\n";
-			pausa();
+			cout << "Has elegido opcion 2.\n";
 			agregarJugadorMesa();
 			pausa();
 			break;
 
 		case '3':
 			system("cls");
-			cout << "Has elejido opcion 3.\n";
-
-			pausa();
+			cout << "Has elegido opcion 3.\n";
 			eliminarJugadorMesa();
 			break;
 
 		case '4':
 			system("cls");
-			cout << "Has elejido opcion 4.\n";
+			cout << "Has elegido opcion 4.\n";
+			terminarPartida();
 			pausa();
 			break;
 
 		case '5':
-			cout << "Has elejido opcion salir.\n";
+			cout << "Has elegido opcion salir.\n";
 			bandera = true;
-			//exit(1);
 			break;
 
 		default:
@@ -377,6 +368,19 @@ void Sistema::menuPrincipalIniciarPartida() {
 // menu 3 configuracion
 void Sistema::menuPrincipalConfiguracion() {
 
+	cout << "Iniciar cuenta administrador:" << endl;
+	cout << "Ingresar rut admin:" << endl;
+	string rutAdmin = "";
+	getline(cin, rutAdmin);
+	cout << "Ingresar contraseña;" << endl;
+	string contraseña = "";
+	getline(cin, contraseña);
+	system("cls");
+	if (!buscarAdmin(rutAdmin, contraseña)) {
+		cout << "* Se ha ingresado un rut o contraseña incorrecta." << endl;
+		return;
+	}
+
 	bool bandera = false;
 	char tecla;
 
@@ -384,11 +388,12 @@ void Sistema::menuPrincipalConfiguracion() {
 	{
 		system("cls");
 		cin.clear();
-		cout << "Taller 1: BLACKJACK ---> Configuracion" << endl;
-		cout << "-----------" << endl << endl;
+		cout << ".:::::::::: BLACKJACK  ::::::::::." << endl;
+		cout << "-----------> Configuracion" << endl << endl;
 		cout << "\t1 .- Cargar saldo a la billetera electronica " << endl;
 		cout << "\t2 .- Consultar saldo" << endl;
 		cout << "\t3 .- Registrar jugador " << endl;
+		cout << "\t4 .- Editar jugador " << endl;
 		cout << "\t4 .- Salir " << endl << endl;
 		cout << "Elije una opcion: ";
 
@@ -398,30 +403,33 @@ void Sistema::menuPrincipalConfiguracion() {
 		{
 		case '1':
 			system("cls");
-			cout << "Has elejido opcion 1.\n";
-			pausa();
+			cout << "Has elegido opcion 1.\n";
 			CargarSaldo();
 			pausa();
 			break;
 
 		case '2':
 			system("cls");
-			cout << "Has elejido opcion 2.\n";
-			pausa();
+			cout << "Has elegido opcion 2.\n";
 			consultarSaldo();
 			pausa();
 			break;
 
 		case '3':
 			system("cls");
-			cout << "Has elejido opcion 3.\n";
-			pausa();
+			cout << "Has elegido opcion 3.\n";
 			registrarJugador();
 			pausa();
 			break;
 
 		case '4':
-			cout << "Has elejido opcion salir.\n";
+			cout << "Has elegido opcion 4.\n";
+			editarJugador();
+			pausa();
+			break;
+
+		case '5':
+			cout << "Has elegido opcion salir.\n";
 			bandera = true;
 			break;
 
@@ -452,7 +460,7 @@ void Sistema::registrarJugador() {
 
 	cout << "Ingrese rut: " << endl;
 	string rut;
-	cin >> rut;
+	getline(cin, rut);
 
 	Jugador* jug = new Jugador(nombre, rut, ultimaId);
 	ultimaId++;
@@ -463,26 +471,11 @@ void Sistema::registrarJugador() {
 
 // consultar saldo de jugadores
 void Sistema::consultarSaldo() {
-	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
-	cout << "Iniciar cuenta administrador:" << endl;
-	cout << "Ingresar rut admin:" << endl;
-	string rutAdmin;
-	cin >> rutAdmin;
-	cout << "Ingresar clave admin;" << endl;
-	string claveAdmin;
-	cin >> claveAdmin;
-	if (buscarAdmin(rutAdmin, claveAdmin) == true) {
-		cout << "Sesion iniciada:" << endl;
-		//lo busca por idBilltera, e imprime sus datos. y saldos
-		cout << "Ingresar idBilletera a buscar:" << endl;
-		int idBilletera;
-		cin >> idBilletera;
-		buscarJugador(idBilletera);
-
-	}
-	else {
-		cout << "Intente otra vez:" << endl;
-	}
+	//lo busca por idBilltera, e imprime sus datos. y saldos
+	cout << "Ingresar idBilletera a buscar:" << endl;
+	int idBilletera;
+	cin >> idBilletera;
+	buscarJugador(idBilletera);
 }
 
 void Sistema::agregarJugadorMesa()
@@ -493,7 +486,7 @@ void Sistema::agregarJugadorMesa()
 
 	cout << "Ingrese el rut del jugador: " << endl;
 	string rut;
-	cin >> rut;
+	getline(cin, rut);
 
 	cout << "Ingrese la id de la billetera del jugador: " << endl;
 	int idBilletera;
@@ -514,36 +507,20 @@ void Sistema::agregarJugadorMesa()
 // Cargar saldo a a la billetera
 void Sistema::CargarSaldo() {
 	// Verifica que el administrador exista , y se hace la consulta de la idBilletera de los jugadores
-	cout << "Iniciar cuenta administrador:" << endl;
-	cout << "Ingresar rut admin:" << endl;
-	string rutAdmin;
-	cin >> rutAdmin;
-	cout << "Ingresar id admin;" << endl;
-	string idAdmin;
-	cin >> idAdmin;
-	if (buscarAdmin(rutAdmin, idAdmin) == true) {
-		cout << "Sesion iniciada:" << endl;
-		//lo busca por idBilltera, luego pregunta cuanto saldo hay que cargar
-		cout << "Ingresar idBilletera a buscar:" << endl;
-		int idBilletera;
-		cin >> idBilletera;
-		cout << "Ingresar saldo a cargar [$1000 - 100000]:" << endl;
-		int saldo;
-		cin >> saldo;
-		if (saldo >= 1000 && saldo < 100000) {
-			//se carga el saldo ingresado por pantalla.
-			buscarJugadorSaldo(idBilletera, saldo);
-		}
+	cout << "Sesion iniciada:" << endl;
+	//lo busca por idBilltera, luego pregunta cuanto saldo hay que cargar
+	cout << "Ingresar idBilletera a buscar:" << endl;
+	int idBilletera;
+	cin >> idBilletera;
+	cout << "Ingresar saldo a cargar [$1.000 - $100.000]:" << endl;
+	int saldo;
+	cin >> saldo;
+	if (saldo >= 1000 && saldo < 100000) {
+		//se carga el saldo ingresado por pantalla.
+		buscarJugadorSaldo(idBilletera, saldo);
+	}
 
-	}
-	else {
-		cout << "Intente otra vez:" << endl;
-	}
 }
-
-
-
-
 
 // se agrega administrador a la lista
 void Sistema::agregarAdmin(Admin& admin) {
@@ -561,10 +538,10 @@ void Sistema::imprimirAdmin()
 	}
 }
 //busca administrador por rut e id
-bool Sistema::buscarAdmin(string rut, string id)
+bool Sistema::buscarAdmin(string rut, string contraseña)
 {
 	for (int i = 0; i < cantActualAdmin; i++) {
-		if (administradores[i].getRut().compare(rut) == 0 && administradores[i].getId().compare(id) == 0) {
+		if (administradores[i].getRut().compare(rut) == 0 && administradores[i].getId().compare(contraseña) == 0) {
 			cout << "Encontrado" << endl;
 			return true;
 
@@ -616,7 +593,7 @@ void Sistema::editarJugador() {
 	cin >> rutJugador;
 	cout << "Ingresar nuevo nombre para el jugador:" << endl;
 	string nombre;
-	cin >> nombre;
+	getline(cin, nombre);
 	buscarJugadorEditar(rutJugador, nombre);
 	escrituraArchivoJugadores();
 }
@@ -639,11 +616,22 @@ bool Sistema::buscarJugadorEditar(string rut, string nombre)
 
 // elimina jugador de la mesa
 void Sistema::eliminarJugadorMesa() {
+	if (blackjack->getCantActual() == 1) {
+		cout << "Como usted es el unico jugador, debe seleccionar la opcion 4 (Terminar Partida) para retirarse." << endl;
+		return;
+	}
 	cout << "Eliminar jugador" << endl;
 	cout << "Ingresar rut jugador:" << endl;
 	string rutJugador;
 	cin >> rutJugador;
 	blackjack->eliminarJugador(rutJugador);
+}
+
+void Sistema::terminarPartida()
+{
+
+	blackjack->eliminarTodosJugadores();
+
 }
 
 //ordenar jugadores por partidas ganadas
@@ -657,27 +645,6 @@ void Sistema::ordenarJugadores(int low, int high)
 		ordenarJugadores(mid + 1, high);
 		merge(low, high, mid);
 	}
-
-
-	/*
-	for (int x = 0; x < jugadores->getCantJugadoresTotales() - 1; x++) {
-
-		for (int k = 0; k < jugadores->getCantJugadoresTotales() - 1 - x; k++) {
-
-			if (jugadores[k].getPartidasGanadas() < jugadores[k + 1].getPartidasGanadas()) {
-
-				Jugador aux;
-				aux = jugadores[k];
-				jugadores[k] = jugadores[k + 1];
-				jugadores[k + 1] = aux;
-			}
-
-
-		}
-
-
-	}
-	*/
 }
 
 void Sistema::merge(int low, int high, int mid) {

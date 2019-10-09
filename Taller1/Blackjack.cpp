@@ -57,6 +57,19 @@ bool Blackjack::eliminarJugador(string rut)
 	return false;
 
 }
+bool Blackjack::eliminarTodosJugadores()
+{
+	Jugador j = Jugador();
+	for (int i = 0; i < cantActual; i++) {
+		jugadores[i] = j;
+		cantActual--;
+
+	}
+
+	cout << "No encontrado" << endl;
+	return false;
+
+}
 
 void Blackjack::imprimirJugadores() {
 	for (int i = 0; i < max; i++) {
@@ -101,53 +114,67 @@ void Blackjack::partida() {
 	for (int i = 0; i < cantActual; i++) {
 		bool cartasMano = jugadores[i].ingresarCarta(mazo.sacarCarta());
 		cartasMano = jugadores[i].ingresarCarta(mazo.sacarCarta());
+		if (jugadores[i].getPuntaje() == 21) {
+			jugadores[i].setPartidasGanadas(1);
+			apuestas[i] = apuestas[i] * 2;
+			jugadores[i].setMonto(apuestas[i]);
+			cout << "Jugador " << jugadores[i].getNombre() << " a GANADO!!" << endl;
+		}
 	}
+
 	//reparte al croupier
+	bool as = false;
 	bool cartasMano = croupier.ingresarCarta(mazo.sacarCarta());
-
-	// si gana solo con las cartas que se repartieron
-
-	if (verificarGanador(21)) {
-		return;
+	if (croupier.getPuntaje() == 11) {
+		as = true;
 	}
+
+
 	//sigue partida
 	for (int i = 0; i < cantActual; i++) {
-		cout << "Jugador" << jugadores[i].getNombre() << " Rendirse [1], Sacar carta [2], No sacar carta [3] " << endl;
 		int opcion = 0;
-		cin >> opcion;
-		if (opcion == 1) {
-			//rendirse
-			jugadores[i].setMonto(apuestas[i] / 2);
-			eliminarJugador(jugadores[i].getRut());
-			cantActual--;
-			break;
+		if (!as) {
+			cout << "Jugador" << jugadores[i].getNombre() << " ¿Quiere rendirse? SI[1] NO[0]" << endl;
+
+			cin >> opcion;
+			if (opcion == 1) {
+				//rendirse
+				jugadores[i].setMonto(apuestas[i] / 2);
+				jugadores[i].setRetiroRonda(true);
+				break;
+			}
+		}
+		else {
+			cout << "* El Croupier tiene un AS. Ningun jugador puede rendir." << endl;
 		}
 
-		if (opcion == 2) {
-			//sacar carta
-			bool masCartas = true;
-			while (masCartas = true) {
-				cout << "Jugador" << i + 1 << "¿sacar carta? Si [1], No [2]  " << endl;
-				int opcion2 = 0;
-				cin >> opcion2;
-				if (opcion2 == 1) {
-					cartasMano = jugadores[i].ingresarCarta(mazo.sacarCarta());
-					if (verificarGanador(21)) {
-						return;
+		if (!jugadores[i].getRetiroRonda()) {
+			cout << "Jugador" << jugadores[i].getNombre() << " Sacar carta [1], No sacar carta [2] " << endl;
+			cin >> opcion;
+
+
+			if (opcion == 1) {
+				//sacar carta
+				bool masCartas = true;
+				while (masCartas) {
+					cout << "Jugador " << jugadores[i].getNombre() << " ¿sacar carta? Si [1], No [2]  " << endl;
+					int opcion2 = 0;
+					cin >> opcion2;
+					if (opcion2 == 1) {
+						cartasMano = jugadores[i].ingresarCarta(mazo.sacarCarta());
+						verificarGanador(21, true);
 					}
+					if (opcion2 == 2) {
+						masCartas = false;
+						break;
+					}
+
 				}
-				if (opcion2 == 2) {
-					masCartas = false;
-					break;
-				}
+
 
 			}
-
-
 		}
-		if (opcion == 3) {
-			//no sacar carta
-		}
+
 	}
 	//sacar cartas croupier > 16
 
@@ -156,32 +183,71 @@ void Blackjack::partida() {
 		bool cartasMano = croupier.ingresarCarta(mazo.sacarCarta());
 	}
 
-	verificarGanador(croupier.getPuntaje());
+	verificarGanador(croupier.getPuntaje(), false);
 
 }
 
 
 
 
-bool Blackjack::verificarGanador(int comparador)
+bool Blackjack::verificarGanador(int comparador, bool forma)
 {
 	bool terminoPartida = false;
-	for (int i = 0; i < cantActual; i++) {
 
-		if (jugadores[i].getPuntaje() == comparador) {
-			jugadores[i].setPartidasGanadas(1);
-			apuestas[i] = apuestas[i] * 2;
-			jugadores[i].setMonto(apuestas[i]);
-			cout << "Jugador" << jugadores[i].getNombre() << " a GANADO!!" << endl;
-			terminoPartida = true;
-		}
-		else if (jugadores[i].getPuntaje() > comparador) {
-			cout << "Jugador" << jugadores[i].getNombre() << " obtuvo puntaje mayor a 21. Ha PERDIDO!!" << endl;
-		}
-		//falta cuando es menor.
 
+	if (!forma) {
+		if (croupier.getPuntaje() > 21) {
+			cout << "Croupier a PERDIDO!!. Todos ganan." << endl;
+			for (int i = 0; i < cantActual; i++) {
+				if (!jugadores[i].getRetiroRonda()) {
+					jugadores[i].setPartidasGanadas(1);
+					apuestas[i] = apuestas[i] * 2;
+					jugadores[i].setMonto(apuestas[i]);
+					cout << "Jugador" << jugadores[i].getNombre() << " a GANADO!!" << endl;
+				}
+
+			}
+			return true;
+		}
+		for (int i = 0; i < cantActual; i++) {
+			if (!jugadores[i].getRetiroRonda()) {
+				if (jugadores[i].getPuntaje() > comparador) {
+					jugadores[i].setPartidasGanadas(1);
+					apuestas[i] = apuestas[i] * 2;
+					jugadores[i].setMonto(apuestas[i]);
+					cout << "Jugador" << jugadores[i].getNombre() << " obtuvo puntaje igual al croupier. a GANADO!!" << endl;
+					terminoPartida = true;
+				}
+				if (jugadores[i].getPuntaje() == comparador) {
+					jugadores[i].setMonto(apuestas[i] / 2);
+					jugadores[i].setRetiroRonda(true);
+					cout << "Jugador" << jugadores[i].getNombre() << " obtuvo puntaje mayor a 21. Ha EMPATADO!!" << endl;
+				}
+				if (jugadores[i].getPuntaje() < comparador) {
+					cout << "Jugador" << jugadores[i].getNombre() << " obtuvo puntaje menor a 21. Ha PERDIDO!!" << endl;
+				}
+				//falta cuando es menor.
+			}
+
+		}
+	}
+	else { //cartas adicionales
+
+		for (int i = 0; i < cantActual; i++) {
+			if (!jugadores[i].getRetiroRonda()) {
+				if (jugadores[i].getPuntaje() > 21) {
+					cout << "Jugador" << jugadores[i].getNombre() << " obtuvo puntaje mayor a 21. Ha PERDIDO!!" << endl;
+					jugadores[i].setRetiroRonda(true);
+				}
+			}
+		}
 	}
 	return terminoPartida;
+}
+
+int Blackjack::getCantActual()
+{
+	return cantActual;
 }
 
 

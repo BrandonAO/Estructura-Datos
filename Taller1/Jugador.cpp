@@ -30,6 +30,7 @@ Jugador::Jugador(string nombre, string rut, int monto, int idBilletera, short in
 	this->monto = monto;
 	this->cartasActual = 0;
 	this->cantJugadoresTotales = 0;
+	this->retiroRonda = false;
 }
 
 Jugador::Jugador(string nombre, string rut, int idBilletera)
@@ -129,4 +130,14 @@ bool Jugador::ingresarCarta(Carta car) {
 }
 void Jugador::setPartidasGanadas(int partidasGanadasX) {
 	partidasGanadas = partidasGanadas + partidasGanadasX;
+}
+
+void Jugador::setRetiroRonda(bool a)
+{
+	retiroRonda = a;
+}
+
+bool Jugador::getRetiroRonda()
+{
+	return retiroRonda;
 }

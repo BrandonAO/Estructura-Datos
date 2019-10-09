@@ -21,9 +21,11 @@ public:
 	Mazo& getMazo();
 	bool agregarJugador(Jugador&);
 	bool eliminarJugador(string rut);
+	bool eliminarTodosJugadores();
 	void imprimirJugadores();
 	//Metodos para el jugar
 	void partida();
-	bool verificarGanador(int);
+	bool verificarGanador(int,bool);
+	int getCantActual();
 };
 

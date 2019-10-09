@@ -18,6 +18,7 @@ private:
 public:
 	Sistema();
 	void iniciarSistema();
+
 	//Metodos para lectura
 	void leerArchivoAdmin();
 	void leerArchivoCartas();
@@ -31,11 +32,11 @@ public:
 	//Metodos para el menu
 
 	//Iniciar partida:
-			//****falta iniciar partida
 	void agregarJugadorMesa();
 	void eliminarJugadorMesa();
+	void terminarPartida();// falta implementar
 
-	//****falta terminar partida
+
 
 	//Jugadores On-fire:
 	void jugadoresOnFire();
@@ -45,7 +46,6 @@ public:
 	void CargarSaldo();
 	void consultarSaldo();
 	void registrarJugador();
-	int asignarBilletera();
 	void editarJugador();
 	bool buscarJugadorEditar(string, string);
 
